@@ -1066,7 +1066,7 @@
 
       // Mosaic parallax — apenas no desktop
       if (window.innerWidth > 768) {
-        const speeds = [-120, 80, -60, 100, -90, 70];
+        const speeds = [-280, 200, -180, 240, -220, 180];
         document.querySelectorAll('.mosaic-item').forEach((item, i) => {
           gsap.to(item, {
             y: speeds[i],
@@ -1075,7 +1075,7 @@
               trigger: '.mosaic-section',
               start: 'top bottom',
               end: 'bottom top',
-              scrub: 1.5
+              scrub: 0.5
             }
           });
         });
