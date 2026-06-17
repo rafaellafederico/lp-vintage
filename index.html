@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Coleção Vintage Saint Germain — relógios femininos de luxo.">
+  <meta property="og:title" content="Vintage — Saint Germain">
+  <meta property="og:description" content="Relógios femininos de design atemporal.">
+  <meta property="og:image" content="Saint_Germain5063__1_.jpeg">
+  <title>Vintage — Saint Germain</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Questrial&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/burgues-script" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+
+  <style>
+    /* ── RESET & BASE ────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:      #000000;
+      --white:      #ffffff;
+      --gray-light: #f5f5f5;
+      --gray-mid:   #d9d9d9;
+      --gray-dark:  #4a4a4a;
+      --gray-text:  #2a2a2a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Questrial', sans-serif;
+      color: var(--black);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAV ─────────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      background: transparent;
+      transition: background 0.4s ease, padding 0.4s ease;
+    }
+    nav.scrolled {
+      background: var(--black);
+      padding: 14px 48px;
+    }
+    .nav-logo {
+      height: 28px;
+      width: auto;
+      filter: brightness(0) invert(1);
+      object-fit: contain;
+    }
+    /* fallback when logo image is missing */
+    .nav-logo-fallback {
+      font-family: 'Questrial', sans-serif;
+      font-size: 14px;
+      letter-spacing: 0.25em;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+    .nav-cta {
+      font-family: 'Questrial', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white);
+      border-bottom: 1px solid var(--white);
+      padding-bottom: 2px;
+      opacity: 0.85;
+      transition: opacity 0.3s;
+    }
+    .nav-cta:hover { opacity: 1; }
+
+    /* ── HERO ────────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--black);
+    }
+    .hero-video-wrap {
+      position: absolute;
+      top: -10%; left: -10%;
+      width: 120%; height: 120%;
+      pointer-events: none;
+    }
+    .hero-video-wrap iframe {
+      width: 100%; height: 100%;
+      border: none;
+    }
+    .hero-mobile-bg {
+      display: none;
+      position: absolute;
+      inset: 0;
+      background-image: url('Saint_Germain5063__1_.jpeg');
+      background-size: cover;
+      background-position: center;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.2) 0%,
+        rgba(0,0,0,0.05) 40%,
+        rgba(0,0,0,0.55) 85%,
+        rgba(0,0,0,0.85) 100%
+      );
+    }
+    .hero-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      gap: 32px;
+    }
+    .hero-logo {
+      height: 60px;
+      width: auto;
+      filter: brightness(0) invert(1);
+      object-fit: contain;
+    }
+    .hero-logo-fallback {
+      font-family: 'Questrial', sans-serif;
+      font-size: 22px;
+      letter-spacing: 0.4em;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+    .hero-cta {
+      display: inline-block;
+      font-family: 'Questrial', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--white);
+      border: 1px solid var(--white);
+      padding: 14px 36px;
+      transition: background 0.35s, color 0.35s;
+    }
+    .hero-cta:hover { background: var(--white); color: var(--black); }
+
+    /* ── SECTION LABELS ─────────────────────────────────────────── */
+    .section-label {
+      font-family: 'Questrial', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gray-dark);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Questrial', sans-serif;
+      font-size: clamp(28px, 4vw, 52px);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--black);
+      margin-bottom: 48px;
+    }
+    .section-head {
+      text-align: center;
+    }
+
+    /* ── BEST SELLERS ────────────────────────────────────────────── */
+    .bestsellers {
+      background: var(--white);
+      padding: 100px 0 80px;
+    }
+    .bestsellers .section-head { padding: 0 48px; }
+
+    .carousel-outer {
+      position: relative;
+    }
+    .carousel-track {
+      display: flex;
+      gap: 24px;
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      padding: 0 48px 16px;
+      cursor: grab;
+      user-select: none;
+    }
+    .carousel-track::-webkit-scrollbar { display: none; }
+    .carousel-track.dragging { cursor: grabbing; scroll-behavior: auto; }
+
+    .product-card {
+      flex-shrink: 0;
+      width: 340px;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card-img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: var(--gray-light);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .product-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 20px;
+      transition: transform 0.5s ease;
+    }
+    .product-card:hover .product-card-img img {
+      transform: scale(1.04);
+    }
+    .product-name {
+      font-family: 'Questrial', sans-serif;
+      font-size: 14px;
+      color: var(--black);
+      margin-bottom: 4px;
+    }
+    .product-subtitle {
+      font-family: 'Questrial', sans-serif;
+      font-size: 11px;
+      color: var(--gray-dark);
+      margin-bottom: 16px;
+    }
+    .btn-product {
+      display: inline-block;
+      font-family: 'Questrial', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--black);
+      border: 1px solid var(--black);
+      padding: 10px 20px;
+      align-self: flex-start;
+      transition: background 0.3s, color 0.3s;
+    }
+    .btn-product:hover { background: var(--black); color: var(--white); }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-60%);
+      background: none;
+      border: 1px solid var(--gray-mid);
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      z-index: 2;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .carousel-btn:hover { border-color: var(--black); background: var(--black); }
+    .carousel-btn:hover svg path { stroke: var(--white); }
+    .carousel-btn-prev { left: 8px; }
+    .carousel-btn-next { right: 8px; }
+    .carousel-btn svg { width: 14px; height: 14px; }
+    .carousel-btn svg path { stroke: var(--gray-dark); stroke-width: 1.5; fill: none; transition: stroke 0.3s; }
+
+    .bestsellers-cta-wrap {
+      text-align: center;
+      margin-top: 40px;
+    }
+    .btn-outline {
+      display: inline-block;
+      font-family: 'Questrial', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--black);
+      border: 1px solid var(--black);
+      padding: 14px 40px;
+      transition: background 0.35s, color 0.35s;
+    }
+    .btn-outline:hover { background: var(--black); color: var(--white); }
+
+    /* ── GALLERY ─────────────────────────────────────────────────── */
+    .gallery-section {
+      background: var(--black);
+      overflow: hidden;
+      padding: 0;
+      line-height: 0;
+    }
+    .gallery-inner {
+      overflow: hidden;
+    }
+    .gallery-track {
+      display: flex;
+      gap: 4px;
+      animation: gallery-slide 40s linear infinite;
+      will-change: transform;
+    }
+    .gallery-track:hover { animation-play-state: paused; }
+    @keyframes gallery-slide {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .gallery-track img {
+      height: 480px;
+      width: auto;
+      object-fit: cover;
+      flex-shrink: 0;
+      filter: grayscale(15%);
+      transition: filter 0.4s;
+    }
+    .gallery-track img:hover { filter: grayscale(0%); }
+
+    /* ── QUOTE ───────────────────────────────────────────────────── */
+    .quote-section {
+      background: var(--white);
+      padding: 140px 48px;
+      text-align: center;
+    }
+    .quote-text {
+      font-family: 'Questrial', sans-serif;
+      font-size: clamp(28px, 5vw, 64px);
+      color: var(--black);
+      line-height: 1.3;
+      font-weight: 400;
+    }
+    .quote-text .script {
+      font-family: 'Burgues Script', cursive;
+      font-size: 1.3em;
+      line-height: 1.1;
+    }
+
+    /* ── LAUNCHES ────────────────────────────────────────────────── */
+    .launches {
+      background: var(--gray-light);
+      padding: 100px 48px 100px;
+    }
+    .launches-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .launch-card {
+      display: block;
+      color: var(--black);
+    }
+    .launch-card-img {
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+      background: var(--gray-mid);
+      margin-bottom: 16px;
+    }
+    .launch-card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .launch-card:hover .launch-card-img img {
+      transform: scale(1.04);
+    }
+    .launch-name {
+      font-family: 'Questrial', sans-serif;
+      font-size: 15px;
+      color: var(--black);
+      margin-bottom: 4px;
+    }
+    .launch-price {
+      font-family: 'Questrial', sans-serif;
+      font-size: 13px;
+      color: var(--gray-dark);
+      margin-bottom: 12px;
+    }
+    .launch-link {
+      font-family: 'Questrial', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--black);
+      opacity: 0.6;
+      transition: opacity 0.3s;
+    }
+    .launch-link:hover { opacity: 1; }
+
+    /* ── MOSAIC ──────────────────────────────────────────────────── */
+    .mosaic-section {
+      background: var(--black);
+      padding: 100px 48px;
+      position: relative;
+      overflow: hidden;
+      min-height: 700px;
+    }
+    .mosaic-logo-bg {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      height: clamp(80px, 15vw, 180px);
+      width: auto;
+      filter: brightness(0) invert(1);
+      opacity: 0.12;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .mosaic-logo-fallback {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Questrial', sans-serif;
+      font-size: clamp(28px, 6vw, 72px);
+      letter-spacing: 0.4em;
+      color: var(--white);
+      opacity: 0.1;
+      z-index: 0;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .mosaic-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr 1fr 1.3fr;
+      grid-template-rows: auto auto;
+      gap: 16px;
+      align-items: start;
+    }
+    .mosaic-img {
+      border: 2px solid var(--white);
+      object-fit: cover;
+      display: block;
+      width: 100%;
+    }
+    .mosaic-img:nth-child(1) {
+      grid-column: 1; grid-row: 1;
+      aspect-ratio: 3/4;
+      transform: rotate(-1.5deg);
+      margin-top: 40px;
+    }
+    .mosaic-img:nth-child(2) {
+      grid-column: 2; grid-row: 1 / 3;
+      aspect-ratio: 2/3;
+      transform: rotate(0.5deg);
+    }
+    .mosaic-img:nth-child(3) {
+      grid-column: 3; grid-row: 1;
+      aspect-ratio: 4/5;
+      transform: rotate(1deg);
+      margin-top: 20px;
+    }
+    .mosaic-img:nth-child(4) {
+      grid-column: 4; grid-row: 1;
+      aspect-ratio: 3/4;
+      transform: rotate(-0.8deg);
+    }
+    .mosaic-img:nth-child(5) {
+      grid-column: 1; grid-row: 2;
+      aspect-ratio: 4/3;
+      transform: rotate(1.2deg);
+    }
+    .mosaic-img:nth-child(6) {
+      grid-column: 3 / 5; grid-row: 2;
+      aspect-ratio: 16/9;
+      transform: rotate(-0.5deg);
+      margin-top: -20px;
+    }
+
+    /* ── FOOTER ──────────────────────────────────────────────────── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 80px 48px 40px;
+      color: var(--white);
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-logo {
+      height: 36px;
+      width: auto;
+      filter: brightness(0) invert(1);
+      margin: 0 auto 48px;
+      display: block;
+    }
+    .footer-logo-fallback {
+      font-family: 'Questrial', sans-serif;
+      font-size: 16px;
+      letter-spacing: 0.4em;
+      color: var(--white);
+      text-align: center;
+      text-transform: uppercase;
+      margin-bottom: 48px;
+    }
+    .footer-nav {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+    .footer-nav a {
+      font-family: 'Questrial', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white);
+      opacity: 0.6;
+      transition: opacity 0.3s;
+    }
+    .footer-nav a:hover { opacity: 1; }
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+    .footer-social a {
+      font-family: 'Questrial', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white);
+      opacity: 0.6;
+      transition: opacity 0.3s;
+    }
+    .footer-social a:hover { opacity: 1; }
+    .footer-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      margin-bottom: 40px;
+    }
+    .footer-newsletter {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+    .footer-newsletter-label {
+      font-family: 'Questrial', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      opacity: 0.7;
+    }
+    .footer-newsletter-form {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1;
+      max-width: 400px;
+    }
+    .footer-newsletter-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(255,255,255,0.4);
+      color: var(--white);
+      font-family: 'Questrial', sans-serif;
+      font-size: 13px;
+      padding: 8px 0;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .footer-newsletter-input::placeholder {
+      color: rgba(255,255,255,0.4);
+    }
+    .footer-newsletter-input:focus {
+      border-color: rgba(255,255,255,0.8);
+    }
+    .footer-newsletter-btn {
+      background: none;
+      border: none;
+      font-family: 'Questrial', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white);
+      cursor: pointer;
+      padding: 0;
+      position: relative;
+      transition: opacity 0.3s;
+    }
+    .footer-newsletter-btn::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0; right: 0;
+      height: 1px;
+      background: var(--white);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+    .footer-newsletter-btn:hover::after { transform: scaleX(1); }
+    .footer-copyright {
+      text-align: center;
+      font-family: 'Questrial', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* ── ACCESSIBILITY ───────────────────────────────────────────── */
+    :focus-visible {
+      outline: 2px solid var(--white);
+      outline-offset: 2px;
+    }
+    .bestsellers :focus-visible,
+    .launches :focus-visible,
+    .quote-section :focus-visible {
+      outline-color: var(--black);
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      nav.scrolled { padding: 12px 24px; }
+
+      .bestsellers { padding: 80px 0 60px; }
+      .bestsellers .section-head { padding: 0 24px; }
+      .carousel-track { padding: 0 24px 16px; gap: 16px; }
+      .product-card { width: 280px; }
+
+      .gallery-track img { height: 320px; }
+
+      .quote-section { padding: 100px 24px; }
+
+      .launches { padding: 80px 24px 80px; }
+      .launches-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .mosaic-section { padding: 60px 24px; }
+      .mosaic-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+      }
+      .mosaic-img { transform: none !important; margin: 0 !important; }
+      .mosaic-img:nth-child(1) { grid-column: 1; grid-row: 1; aspect-ratio: 3/4; }
+      .mosaic-img:nth-child(2) { grid-column: 2; grid-row: 1; aspect-ratio: 3/4; }
+      .mosaic-img:nth-child(3) { grid-column: 1; grid-row: 2; aspect-ratio: 3/4; }
+      .mosaic-img:nth-child(4) { grid-column: 2; grid-row: 2; aspect-ratio: 3/4; }
+      .mosaic-img:nth-child(5) { grid-column: 1; grid-row: 3; aspect-ratio: 3/4; }
+      .mosaic-img:nth-child(6) { grid-column: 2; grid-row: 3; aspect-ratio: 3/4; }
+
+      footer { padding: 60px 24px 32px; }
+      .footer-newsletter { flex-direction: column; align-items: flex-start; }
+      .footer-newsletter-form { max-width: 100%; width: 100%; }
+    }
+
+    @media (max-width: 600px) {
+      .hero-logo { height: 44px; }
+
+      .gallery-track img { height: 220px; }
+
+      .launches-grid { grid-template-columns: 1fr; }
+
+      .mosaic-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* ── REDUCED MOTION ──────────────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      .gallery-track { animation: none !important; }
+      html { scroll-behavior: auto; }
+      * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+    }
+
+    /* ── INIT STATES FOR GSAP ────────────────────────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+    .clip-reveal {
+      clip-path: inset(0 100% 0 0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <a href="https://www.saintgermainbrand.com.br">
+      <img class="nav-logo" src="sg-logo.png" alt="Saint Germain Brand"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+      <span class="nav-logo-fallback" style="display:none">SAINT GERMAIN</span>
+    </a>
+    <a href="https://www.saintgermainbrand.com.br/relogios/vintage/" class="nav-cta">
+      Ver Coleção
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-video-wrap" id="hero-video-wrap">
+      <iframe
+        src="https://www.youtube.com/embed/_uTAxo1fF60?autoplay=1&mute=1&loop=1&playlist=_uTAxo1fF60&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3"
+        allow="autoplay; encrypted-media"
+        allowfullscreen
+        title="Saint Germain Vintage — vídeo da coleção"
+      ></iframe>
+    </div>
+    <div class="hero-mobile-bg" id="hero-mobile-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <img
+        class="hero-logo"
+        src="sg-logo.png"
+        alt="Saint Germain Brand"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"
+      >
+      <span class="hero-logo-fallback" style="display:none">SAINT GERMAIN</span>
+      <a href="https://www.saintgermainbrand.com.br/relogios/vintage/" class="hero-cta">
+        Ver Coleção
+      </a>
+    </div>
+  </section>
+
+  <!-- BEST SELLERS -->
+  <section class="bestsellers">
+    <div class="section-head fade-up">
+      <p class="section-label">Coleção Vintage</p>
+      <h2 class="section-title">Best Sellers</h2>
+    </div>
+
+    <div class="carousel-outer">
+      <button class="carousel-btn carousel-btn-prev" aria-label="Anterior" id="carousel-prev">
+        <svg viewBox="0 0 14 14"><path d="M9 1L3 7l6 6" /></svg>
+      </button>
+      <div class="carousel-track" id="carousel-track"></div>
+      <button class="carousel-btn carousel-btn-next" aria-label="Próximo" id="carousel-next">
+        <svg viewBox="0 0 14 14"><path d="M5 1l6 6-6 6" /></svg>
+      </button>
+    </div>
+
+    <div class="bestsellers-cta-wrap fade-up">
+      <a href="https://www.saintgermainbrand.com.br/relogios/vintage/" class="btn-outline">
+        Ver Coleção Completa
+      </a>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery-section" aria-label="Galeria de campanha">
+    <div class="gallery-inner">
+      <div class="gallery-track" id="gallery-track"></div>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <section class="quote-section">
+    <p class="quote-text fade-up">
+      What has been <span class="script">beautiful,</span><br>
+      will always be <span class="script">beautiful</span>
+    </p>
+  </section>
+
+  <!-- LAUNCHES -->
+  <section class="launches">
+    <div class="section-head fade-up">
+      <p class="section-label">Novidades</p>
+      <h2 class="section-title">Últimos Lançamentos</h2>
+    </div>
+    <div class="launches-grid" id="launches-grid"></div>
+  </section>
+
+  <!-- MOSAIC -->
+  <section class="mosaic-section" aria-label="Mosaico editorial">
+    <img
+      class="mosaic-logo-bg"
+      src="sg-logo.png"
+      alt=""
+      aria-hidden="true"
+      onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"
+    >
+    <span class="mosaic-logo-fallback" aria-hidden="true" style="display:none">SG</span>
+    <div class="mosaic-grid" id="mosaic-grid"></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <img
+        class="footer-logo"
+        src="sg-logo.png"
+        alt="Saint Germain Brand"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"
+      >
+      <p class="footer-logo-fallback" style="display:none">SAINT GERMAIN</p>
+
+      <nav class="footer-nav" aria-label="Links do rodapé">
+        <a href="https://www.saintgermainbrand.com.br/relogios/">Relógios</a>
+        <a href="https://www.saintgermainbrand.com.br/oculos/">Óculos</a>
+        <a href="https://www.saintgermainbrand.com.br/semijoias/">Semijoias</a>
+        <a href="https://www.saintgermainbrand.com.br/contato/">Contato</a>
+      </nav>
+
+      <div class="footer-social">
+        <a href="https://www.instagram.com/saintgermainbrand/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://www.tiktok.com/@saintgermainbrand" target="_blank" rel="noopener noreferrer">TikTok</a>
+      </div>
+
+      <hr class="footer-divider">
+
+      <div class="footer-newsletter">
+        <span class="footer-newsletter-label">Sua newsletter</span>
+        <form class="footer-newsletter-form" onsubmit="return false;">
+          <input
+            type="email"
+            class="footer-newsletter-input"
+            placeholder="Seu e-mail"
+            aria-label="Seu e-mail para newsletter"
+          >
+          <button type="submit" class="footer-newsletter-btn">Assinar →</button>
+        </form>
+      </div>
+
+      <p class="footer-copyright">© 2025 Saint Germain Brand · Todos os direitos reservados</p>
+    </div>
+  </footer>
+
+  <script>
+    // ─── CONFIGURAÇÃO — edite aqui ──────────────────────────────────
+
+    const PRODUCTS_BESTSELLERS = [
+      {
+        name: "Abbey",
+        subtitle: "Bisel removível · Elo dourado",
+        image: "068.jpg",
+        url: "https://www.saintgermainbrand.com.br/produtos/relogio-feminino-redondo-vintage-abbey-dourado-caixa-dourada-e-bisel-removivel/"
+      },
+      {
+        name: "Amber",
+        subtitle: "Pulseira croco · Algarismos romanos",
+        image: "amber.jpg",
+        url: "https://www.saintgermainbrand.com.br/produtos/relogio-feminino-redondo-vintage-amber-pulseira-croco-marrom-e-caixa-dourada-com-numeros-romanos/"
+      },
+      {
+        name: "Lana",
+        subtitle: "Elo torcido · Caixa dourada",
+        image: "053.jpg",
+        url: "https://www.saintgermainbrand.com.br/produtos/relogio-feminino-redondo-vintage-lana-dourado/"
+      },
+      {
+        name: "Gala",
+        subtitle: "Bracelete largo · Mostrador árabe",
+        image: "057.jpg",
+        url: "https://www.saintgermainbrand.com.br/produtos/relogio-feminino-redondo-bracelete-gala-vintage-dourado/"
+      },
+      {
+        name: "Opalini",
+        subtitle: "Fundo perolado · Bracelete oval",
+        image: "055.jpg",
+        url: "https://www.saintgermainbrand.com.br/produtos/relogio-feminino-redondo-vintage-opalini-dourado-com-fundo-perolado/"
+      },
+      {
+        name: "Oval Mini",
+        subtitle: "Caixa oval · Bracelete pantera",
+        image: "072.jpg",
+        url: "https://www.saintgermainbrand.com.br/produtos/relogio-feminino-pequeno-oval-mini-dourado/"
+      }
+    ];
+
+    const GALLERY_IMAGES = [
+      "Saint_Germain5063__1_.jpeg",
+      "Saint_Germain5124.jpeg",
+      "Saint_Germain5135.jpeg",
+      "Saint_Germain5155.jpeg",
+      "Saint_Germain5020.jpeg",
+      "Saint_Germain5028.jpeg",
+      "Saint_Germain5042.jpeg",
+      "Copy_of_Saint_German_24-06_798.jpg",
+      "Copy_of_Saint_German_24-06_818-Recuperado.jpg",
+      "Saint_Germain5063.jpeg"
+    ];
+
+    const LAUNCHES = [
+      {
+        name: "Nome do produto",
+        price: "R$ 000,00",
+        image: "produto-lancamento-1.jpg",
+        url: "#"
+      },
+      {
+        name: "Nome do produto",
+        price: "R$ 000,00",
+        image: "produto-lancamento-2.jpg",
+        url: "#"
+      },
+      {
+        name: "Nome do produto",
+        price: "R$ 000,00",
+        image: "produto-lancamento-3.jpg",
+        url: "#"
+      }
+    ];
+
+    const MOSAIC_IMAGES = [
+      "Saint_Germain5063__1_.jpeg",
+      "Saint_Germain5124.jpeg",
+      "Saint_Germain5042.jpeg",
+      "Saint_Germain5028.jpeg",
+      "Copy_of_Saint_German_24-06_798.jpg",
+      "Saint_Germain5155.jpeg"
+    ];
+
+    // ───────────────────────────────────────────────────────────────
+
+    // ── MOBILE DETECTION ────────────────────────────────────────────
+    if (window.innerWidth < 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      document.getElementById('hero-video-wrap').style.display = 'none';
+      document.getElementById('hero-mobile-bg').style.display = 'block';
+    }
+
+    // ── NAV SCROLL ──────────────────────────────────────────────────
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // ── RENDER BEST SELLERS ─────────────────────────────────────────
+    const carouselTrack = document.getElementById('carousel-track');
+    PRODUCTS_BESTSELLERS.forEach(p => {
+      carouselTrack.insertAdjacentHTML('beforeend', `
+        <div class="product-card">
+          <div class="product-card-img">
+            <img src="${p.image}" alt="${p.name} — Saint Germain Vintage" loading="lazy">
+          </div>
+          <p class="product-name">${p.name}</p>
+          <p class="product-subtitle">${p.subtitle}</p>
+          <a href="${p.url}" class="btn-product" target="_blank" rel="noopener noreferrer">Ver produto</a>
+        </div>
+      `);
+    });
+
+    // ── CAROUSEL DRAG (mouse + touch) ────────────────────────────────
+    const track = document.getElementById('carousel-track');
+    let isDragging = false, startX = 0, scrollLeft = 0;
+
+    track.addEventListener('mousedown', e => {
+      isDragging = true;
+      startX = e.pageX - track.offsetLeft;
+      scrollLeft = track.scrollLeft;
+      track.classList.add('dragging');
+    });
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+      track.classList.remove('dragging');
+    });
+    document.addEventListener('mousemove', e => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - track.offsetLeft;
+      track.scrollLeft = scrollLeft - (x - startX);
+    });
+
+    // ── CAROUSEL ARROWS ──────────────────────────────────────────────
+    const cardWidth = () => track.querySelector('.product-card').offsetWidth + 24;
+    document.getElementById('carousel-prev').addEventListener('click', () => {
+      track.scrollBy({ left: -cardWidth(), behavior: 'smooth' });
+    });
+    document.getElementById('carousel-next').addEventListener('click', () => {
+      track.scrollBy({ left: cardWidth(), behavior: 'smooth' });
+    });
+
+    // ── CAROUSEL AUTOPLAY ────────────────────────────────────────────
+    let autoplayInterval = setInterval(() => {
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      if (track.scrollLeft >= maxScroll - 2) {
+        track.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        track.scrollBy({ left: cardWidth(), behavior: 'smooth' });
+      }
+    }, 3500);
+    track.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
+    track.addEventListener('mouseleave', () => {
+      autoplayInterval = setInterval(() => {
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        if (track.scrollLeft >= maxScroll - 2) {
+          track.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          track.scrollBy({ left: cardWidth(), behavior: 'smooth' });
+        }
+      }, 3500);
+    });
+
+    // ── RENDER GALLERY ───────────────────────────────────────────────
+    const galleryTrack = document.getElementById('gallery-track');
+    const allGallery = [...GALLERY_IMAGES, ...GALLERY_IMAGES]; // duplicate for infinite loop
+    allGallery.forEach(src => {
+      galleryTrack.insertAdjacentHTML('beforeend',
+        `<img src="${src}" alt="Campanha Saint Germain Vintage" loading="lazy">`
+      );
+    });
+
+    // ── RENDER LAUNCHES ──────────────────────────────────────────────
+    const launchesGrid = document.getElementById('launches-grid');
+    LAUNCHES.forEach(p => {
+      launchesGrid.insertAdjacentHTML('beforeend', `
+        <a href="${p.url}" class="launch-card">
+          <div class="launch-card-img">
+            <img src="${p.image}" alt="${p.name}" loading="lazy">
+          </div>
+          <p class="launch-name">${p.name}</p>
+          <p class="launch-price">${p.price}</p>
+          <span class="launch-link">Ver produto →</span>
+        </a>
+      `);
+    });
+
+    // ── RENDER MOSAIC ────────────────────────────────────────────────
+    const mosaicGrid = document.getElementById('mosaic-grid');
+    MOSAIC_IMAGES.forEach((src, i) => {
+      mosaicGrid.insertAdjacentHTML('beforeend',
+        `<img class="mosaic-img" src="${src}" alt="Editorial Saint Germain Vintage ${i+1}" loading="lazy">`
+      );
+    });
+
+    // ── GSAP ANIMATIONS ──────────────────────────────────────────────
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!prefersReducedMotion) {
+      gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+      // Hero entrance
+      gsap.from(".hero-logo, .hero-logo-fallback", {
+        opacity: 0, y: 30, duration: 1.2, delay: 0.4, ease: "power2.out"
+      });
+      gsap.from(".hero-cta", {
+        opacity: 0, y: 20, duration: 1, delay: 0.9, ease: "power2.out"
+      });
+
+      // Fade-up elements on scroll
+      gsap.utils.toArray('.fade-up').forEach(el => {
+        gsap.to(el, {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 88%",
+            toggleActions: "play none none none"
+          }
+        });
+      });
+
+      // Quote reveal
+      gsap.from(".quote-text", {
+        opacity: 0,
+        y: 40,
+        duration: 1.1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".quote-section",
+          start: "top 80%"
+        }
+      });
+
+      // Launch cards stagger
+      gsap.from(".launch-card", {
+        opacity: 0,
+        y: 40,
+        stagger: 0.12,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".launches-grid",
+          start: "top 85%"
+        }
+      });
+
+      // Mosaic parallax
+      gsap.to(".mosaic-img", {
+        y: (i) => (i % 2 === 0 ? -30 : 30),
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".mosaic-section",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1
+        }
+      });
+
+      // Gallery parallax
+      gsap.from(".gallery-section", {
+        opacity: 0,
+        duration: 0.8,
+        scrollTrigger: {
+          trigger: ".gallery-section",
+          start: "top 95%"
+        }
+      });
+    }
+  </script>
+</body>
+</html>
