@@ -650,25 +650,40 @@
       .launches-grid { grid-template-columns: repeat(2, 1fr); }
 
       .mosaic-section {
-        height: auto;
+        position: relative !important;
+        height: auto !important;
         min-height: unset;
-        padding: 60px 24px;
-        display: block;
-      }
-      .mosaic-grid {
-        position: relative;
-        inset: unset;
+        padding: 60px 16px;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 12px;
+        align-items: unset;
+        justify-content: unset;
       }
       .mosaic-item {
         position: relative !important;
-        top: auto !important; left: auto !important;
-        right: auto !important; bottom: auto !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
         width: 100% !important;
         height: auto !important;
         aspect-ratio: 3/4;
+        animation: none !important;
+        transform: none !important;
+      }
+      .mosaic-item:nth-child(1),
+      .mosaic-item:nth-child(2),
+      .mosaic-item:nth-child(3),
+      .mosaic-item:nth-child(4),
+      .mosaic-item:nth-child(5),
+      .mosaic-item:nth-child(6) {
+        width: 100% !important;
+        height: auto !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
         animation: none !important;
       }
 
