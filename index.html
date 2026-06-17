@@ -393,70 +393,71 @@
     .launch-link:hover { opacity: 1; }
 
     /* ── MOSAIC ──────────────────────────────────────────────────── */
-    /* ── MOSAIC ──────────────────────────────────────────────────── */
-    #mosaico {
-      position: relative;
+    /* ── MOSAIC / HOVER GALLERY ─────────────────────────────────── */
+    .hover-gallery__container {
       background: var(--black);
+      position: relative;
     }
-    .mosaic-logo-bg {
+    .hover-gallery__logo-wrap {
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       width: 40%;
+      z-index: 1;
+      pointer-events: none;
+      text-align: center;
+    }
+    .hover-gallery__logo {
+      width: 100%;
+      height: auto;
       opacity: 0.12;
       filter: brightness(0) invert(1);
-      pointer-events: none;
-      z-index: 1;
+      display: block;
     }
-    .mosaic-logo-fallback {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
+    .hover-gallery__logo-text {
       font-family: 'Questrial', sans-serif;
       font-size: clamp(28px, 6vw, 72px);
       letter-spacing: 0.4em;
       color: var(--white);
       opacity: 0.1;
-      z-index: 1;
       white-space: nowrap;
-      pointer-events: none;
     }
-    .mosaic-grid {
+    .hover-gallery__grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       grid-auto-rows: auto;
-      gap: 0;
+      gap: 2px;
       position: relative;
       z-index: 2;
     }
-    .mosaic-item {
+    .hover-gallery__item {
       overflow: hidden;
       position: relative;
-      outline: 1px solid rgba(255,255,255,0.06);
     }
-    .mosaic-img-wrap {
+    .hover-gallery__img-container {
       position: relative;
       width: 100%;
       aspect-ratio: 3/4;
     }
-    .mosaic-img-wrap img {
+    .hover-gallery__img-container img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
-    .mosaic-cover {
+    .hover-gallery__cover {
       position: absolute;
       inset: 0;
-      background-color: var(--black);
-      transition: opacity 0.4s ease;
+      background-color: #111111;
+      transition: opacity 0.45s ease;
     }
-    .mosaic-item:hover .mosaic-cover {
+    .hover-gallery__item:hover .hover-gallery__cover {
       opacity: 0;
     }
 
     @media (max-width: 768px) {
-      .mosaic-grid { grid-template-columns: repeat(2, 1fr); }
+      .hover-gallery__grid { grid-template-columns: repeat(2, 1fr); }
+      .hover-gallery__logo-wrap { width: 70%; }
     }
 
     /* ── FOOTER ──────────────────────────────────────────────────── */
@@ -742,17 +743,18 @@
     <div class="launches-grid" id="launches-grid"></div>
   </section>
 
-  <!-- MOSAIC -->
-  <div id="mosaico" aria-label="Mosaico editorial">
-    <img
-      class="mosaic-logo-bg"
-      src="sg-logo.png"
-      alt=""
-      aria-hidden="true"
-      onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"
-    >
-    <span class="mosaic-logo-fallback" aria-hidden="true" style="display:none">SG</span>
-    <section class="mosaic-grid" id="mosaic-grid">
+  <!-- MOSAIC / HOVER GALLERY -->
+  <div id="hoverGallery" class="hover-gallery__container" aria-label="Mosaico editorial">
+    <div class="hover-gallery__logo-wrap" aria-hidden="true">
+      <img
+        class="hover-gallery__logo"
+        src="sg-logo.png"
+        alt=""
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"
+      >
+      <span class="hover-gallery__logo-text" style="display:none">SAINT GERMAIN</span>
+    </div>
+    <section class="hover-gallery__grid" id="mosaic-grid">
       <!-- itens injetados via JS -->
     </section>
   </div>
@@ -996,10 +998,10 @@
     const mosaicGrid = document.getElementById('mosaic-grid');
     MOSAIC_IMAGES.forEach((src, i) => {
       mosaicGrid.insertAdjacentHTML('beforeend', `
-        <div class="mosaic-item">
-          <div class="mosaic-img-wrap">
+        <div class="hover-gallery__item" data-title="">
+          <div class="hover-gallery__img-container">
             <img src="${src}" alt="Editorial Saint Germain Vintage ${i+1}" loading="lazy">
-            <div class="mosaic-cover"></div>
+            <div class="hover-gallery__cover"></div>
           </div>
         </div>
       `);
