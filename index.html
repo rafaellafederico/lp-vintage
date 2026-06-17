@@ -292,35 +292,46 @@
     .btn-outline:hover { background: var(--black); color: var(--white); }
 
     /* ── GALLERY ─────────────────────────────────────────────────── */
-    .gallery-section {
+    /* ── GALLERY (scroll-driven horizontal) ─────────────────────── */
+    .gallery-pin-track {
+      height: 300svh;
       background: var(--black);
+    }
+    horizontal-gallery {
+      display: block;
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      overflow: hidden;
+    }
+    horizontal-gallery .gallery-track {
+      display: flex;
+      flex-flow: row nowrap;
+      height: 100%;
       overflow: hidden;
       padding: 0;
-      line-height: 0;
+      gap: 4px;
     }
-    .gallery-inner {
+    horizontal-gallery .gallery-panel {
+      flex-shrink: 0;
+      width: calc(100% / 3);
+      height: 100%;
       overflow: hidden;
     }
-    .gallery-track {
-      display: flex;
-      gap: 4px;
-      animation: gallery-slide 40s linear infinite;
-      will-change: transform;
-    }
-    .gallery-track:hover { animation-play-state: paused; }
-    @keyframes gallery-slide {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-    .gallery-track img {
-      height: 480px;
-      width: auto;
+    horizontal-gallery .gallery-panel img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      flex-shrink: 0;
+      display: block;
       filter: grayscale(15%);
       transition: filter 0.4s;
     }
-    .gallery-track img:hover { filter: grayscale(0%); }
+    horizontal-gallery .gallery-panel img:hover { filter: grayscale(0%); }
+
+    @media (max-width: 768px) {
+      .gallery-pin-track { height: 400svh; }
+      horizontal-gallery .gallery-panel { width: calc(100% / 1.2); }
+    }
 
     /* ── QUOTE ───────────────────────────────────────────────────── */
     .quote-section {
@@ -617,8 +628,6 @@
       .carousel-track { padding: 0 24px 16px; gap: 16px; }
       .product-card { width: 280px; }
 
-      .gallery-track img { height: 320px; }
-
       .quote-section { padding: 100px 24px; }
 
       .launches { padding: 80px 24px 80px; }
@@ -633,14 +642,12 @@
     @media (max-width: 600px) {
       .hero-logo { height: 44px; }
 
-      .gallery-track img { height: 220px; }
-
       .launches-grid { grid-template-columns: 1fr; }
     }
 
     /* ── REDUCED MOTION ──────────────────────────────────────────── */
     @media (prefers-reduced-motion: reduce) {
-      .gallery-track, .mosaic-item { animation: none !important; }
+      .mosaic-item { animation: none !important; }
       html { scroll-behavior: auto; }
       * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
     }
@@ -719,12 +726,14 @@
     </div>
   </section>
 
-  <!-- GALLERY -->
-  <section class="gallery-section" aria-label="Galeria de campanha">
-    <div class="gallery-inner">
-      <div class="gallery-track" id="gallery-track"></div>
-    </div>
-  </section>
+  <!-- GALLERY (scroll-driven horizontal) -->
+  <div class="gallery-pin-track" aria-label="Galeria de campanha">
+    <horizontal-gallery>
+      <section class="gallery-track" id="gallery-track">
+        <!-- painéis injetados via JS -->
+      </section>
+    </horizontal-gallery>
+  </div>
 
   <!-- QUOTE -->
   <section class="quote-section">
@@ -971,13 +980,71 @@
     });
 
     // ── RENDER GALLERY ───────────────────────────────────────────────
+    // ── RENDER GALLERY PANELS ────────────────────────────────────────
     const galleryTrack = document.getElementById('gallery-track');
-    const allGallery = [...GALLERY_IMAGES, ...GALLERY_IMAGES]; // duplicate for infinite loop
-    allGallery.forEach(src => {
-      galleryTrack.insertAdjacentHTML('beforeend',
-        `<img src="${src}" alt="Campanha Saint Germain Vintage" loading="lazy">`
-      );
+    GALLERY_IMAGES.forEach((src, i) => {
+      galleryTrack.insertAdjacentHTML('beforeend', `
+        <div class="gallery-panel">
+          <img src="${src}" alt="Campanha Saint Germain Vintage ${i+1}" loading="lazy">
+        </div>
+      `);
     });
+
+    // ── HORIZONTAL GALLERY WEB COMPONENT ─────────────────────────────
+    class HorizontalGallery extends HTMLElement {
+      #controller   = null;
+      #rafScheduled = false;
+      #currentX     = 0;
+      #hScrollRoom  = 0;
+      #panels       = [];
+
+      connectedCallback() { this.#setup(); }
+      disconnectedCallback() { this.#controller?.abort(); }
+
+      #setup() {
+        this.#controller?.abort();
+        this.#controller = new AbortController();
+        const sig = { signal: this.#controller.signal };
+
+        const track  = this.closest('.gallery-pin-track');
+        const inner  = this.querySelector('.gallery-track');
+        this.#panels = [...this.querySelectorAll('.gallery-panel')];
+
+        const recalc = () => {
+          const totalWidth = this.#panels.reduce((s, p) => s + p.offsetWidth, 0);
+          this.#hScrollRoom = Math.max(0, totalWidth - this.offsetWidth);
+        };
+        recalc();
+
+        const tick = () => {
+          this.#rafScheduled = false;
+          const st         = track.getBoundingClientRect().top;
+          const scrollRoom = track.offsetHeight - this.offsetHeight;
+          const newX       = -Math.max(0, Math.min(1, -st / scrollRoom)) * this.#hScrollRoom;
+          if (Math.abs(newX - this.#currentX) > 0.1) {
+            this.#currentX = newX;
+            this.#panels.forEach(p => { p.style.transform = `translateX(${newX}px)`; });
+          }
+        };
+
+        const onScroll = () => {
+          if (!this.#rafScheduled) {
+            this.#rafScheduled = true;
+            requestAnimationFrame(tick);
+          }
+        };
+
+        window.addEventListener('scroll', onScroll, { passive: true, ...sig });
+        window.addEventListener('resize', () => { recalc(); tick(); }, sig);
+        window.addEventListener('orientationchange', () => {
+          setTimeout(() => { recalc(); tick(); }, 300);
+        }, sig);
+
+        tick();
+      }
+    }
+
+    customElements.define('horizontal-gallery', HorizontalGallery);
 
     // ── RENDER LAUNCHES ──────────────────────────────────────────────
     const launchesGrid = document.getElementById('launches-grid');
@@ -1062,12 +1129,12 @@
       });
 
 
-      // Gallery parallax
-      gsap.from(".gallery-section", {
+      // Gallery fade-in
+      gsap.from(".gallery-pin-track", {
         opacity: 0,
         duration: 0.8,
         scrollTrigger: {
-          trigger: ".gallery-section",
+          trigger: ".gallery-pin-track",
           start: "top 95%"
         }
       });
