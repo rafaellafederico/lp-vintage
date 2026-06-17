@@ -394,26 +394,19 @@
 
     /* ── MOSAIC ──────────────────────────────────────────────────── */
     /* ── MOSAIC ──────────────────────────────────────────────────── */
-    .mosaic-section {
+    #mosaico {
       position: relative;
-      height: 100vh;
-      min-height: 700px;
       background: var(--black);
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
     .mosaic-logo-bg {
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      height: clamp(80px, 15vw, 220px);
-      width: auto;
+      width: 40%;
+      opacity: 0.12;
       filter: brightness(0) invert(1);
-      opacity: 0.13;
-      z-index: 1;
       pointer-events: none;
+      z-index: 1;
     }
     .mosaic-logo-fallback {
       position: absolute;
@@ -429,60 +422,40 @@
       pointer-events: none;
     }
     .mosaic-grid {
-      position: absolute;
-      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: auto;
+      gap: 0;
+      position: relative;
+      z-index: 2;
     }
     .mosaic-item {
-      position: absolute;
-      z-index: 2;
-      border: 2px solid var(--white);
       overflow: hidden;
+      position: relative;
     }
-    .mosaic-item img {
+    .mosaic-img-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3/4;
+    }
+    .mosaic-img-wrap img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
-    .mosaic-item:nth-child(1) { width: 200px; height: 260px; top: 8%;    left: 3%;   animation: float1  9s ease-in-out infinite; }
-    .mosaic-item:nth-child(2) { width: 260px; height: 200px; top: 5%;    left: 30%;  animation: float2 11s ease-in-out infinite; }
-    .mosaic-item:nth-child(3) { width: 220px; height: 280px; top: 6%;    right: 4%;  animation: float3  8s ease-in-out infinite; }
-    .mosaic-item:nth-child(4) { width: 180px; height: 240px; bottom: 8%; left: 6%;   animation: float4 10s ease-in-out infinite; }
-    .mosaic-item:nth-child(5) { width: 240px; height: 200px; bottom: 6%; left: 35%;  animation: float5 12s ease-in-out infinite; }
-    .mosaic-item:nth-child(6) { width: 200px; height: 260px; bottom: 7%; right: 5%;  animation: float6  9s ease-in-out infinite; }
+    .mosaic-cover {
+      position: absolute;
+      inset: 0;
+      background-color: var(--black);
+      transition: opacity 0.4s ease;
+    }
+    .mosaic-item:hover .mosaic-cover {
+      opacity: 0;
+    }
 
-    @keyframes float1 {
-      0%   { transform: translate(0px,   0px); }
-      33%  { transform: translate(12px, -18px); }
-      66%  { transform: translate(-8px,  10px); }
-      100% { transform: translate(0px,   0px); }
-    }
-    @keyframes float2 {
-      0%   { transform: translate(0px,   0px); }
-      50%  { transform: translate(-14px, 20px); }
-      100% { transform: translate(0px,   0px); }
-    }
-    @keyframes float3 {
-      0%   { transform: translate(0px,  0px); }
-      40%  { transform: translate(10px, 16px); }
-      80%  { transform: translate(-6px,-10px); }
-      100% { transform: translate(0px,  0px); }
-    }
-    @keyframes float4 {
-      0%   { transform: translate(0px,   0px); }
-      50%  { transform: translate(16px, -12px); }
-      100% { transform: translate(0px,   0px); }
-    }
-    @keyframes float5 {
-      0%   { transform: translate(0px,   0px); }
-      35%  { transform: translate(-10px,-20px); }
-      70%  { transform: translate(14px,   8px); }
-      100% { transform: translate(0px,   0px); }
-    }
-    @keyframes float6 {
-      0%   { transform: translate(0px,   0px); }
-      50%  { transform: translate(-12px, 18px); }
-      100% { transform: translate(0px,   0px); }
+    @media (max-width: 768px) {
+      .mosaic-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     /* ── FOOTER ──────────────────────────────────────────────────── */
@@ -649,43 +622,6 @@
       .launches { padding: 80px 24px 80px; }
       .launches-grid { grid-template-columns: repeat(2, 1fr); }
 
-      .mosaic-section {
-        position: relative !important;
-        height: auto !important;
-        min-height: unset;
-        padding: 60px 16px;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        align-items: unset;
-        justify-content: unset;
-      }
-      .mosaic-item {
-        position: relative !important;
-        top: auto !important;
-        left: auto !important;
-        right: auto !important;
-        bottom: auto !important;
-        width: 100% !important;
-        height: auto !important;
-        aspect-ratio: 3/4;
-        animation: none !important;
-        transform: none !important;
-      }
-      .mosaic-item:nth-child(1),
-      .mosaic-item:nth-child(2),
-      .mosaic-item:nth-child(3),
-      .mosaic-item:nth-child(4),
-      .mosaic-item:nth-child(5),
-      .mosaic-item:nth-child(6) {
-        width: 100% !important;
-        height: auto !important;
-        top: auto !important;
-        left: auto !important;
-        right: auto !important;
-        bottom: auto !important;
-        animation: none !important;
-      }
 
       footer { padding: 60px 24px 32px; }
       .footer-newsletter { flex-direction: column; align-items: flex-start; }
@@ -806,7 +742,7 @@
   </section>
 
   <!-- MOSAIC -->
-  <section class="mosaic-section" aria-label="Mosaico editorial">
+  <div id="mosaico" aria-label="Mosaico editorial">
     <img
       class="mosaic-logo-bg"
       src="sg-logo.png"
@@ -815,10 +751,10 @@
       onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"
     >
     <span class="mosaic-logo-fallback" aria-hidden="true" style="display:none">SG</span>
-    <div class="mosaic-grid" id="mosaic-grid">
+    <section class="mosaic-grid" id="mosaic-grid">
       <!-- itens injetados via JS -->
-    </div>
-  </section>
+    </section>
+  </div>
 
   <!-- FOOTER -->
   <footer>
@@ -1056,7 +992,10 @@
     MOSAIC_IMAGES.forEach((src, i) => {
       mosaicGrid.insertAdjacentHTML('beforeend', `
         <div class="mosaic-item">
-          <img src="${src}" alt="Editorial Saint Germain Vintage ${i+1}" loading="lazy">
+          <div class="mosaic-img-wrap">
+            <img src="${src}" alt="Editorial Saint Germain Vintage ${i+1}" loading="lazy">
+            <div class="mosaic-cover"></div>
+          </div>
         </div>
       `);
     });
@@ -1115,7 +1054,6 @@
         }
       });
 
-      // Mosaico: movimento autônomo via CSS @keyframes — sem GSAP aqui
 
       // Gallery parallax
       gsap.from(".gallery-section", {
