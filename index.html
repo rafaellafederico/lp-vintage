@@ -13,459 +13,248 @@
 
     :root {
       --black: #0a0a0a;
-      --red: #6b0f0f;
       --white: #ffffff;
       --gold: #c9a84c;
-      --gold-dim: rgba(201,168,76,0.55);
-      --cream: rgba(242,237,230,0.65);
-      --card-bg: #f8f6f2;
+      --gold-dim: rgba(201,168,76,0.4);
+      --cream: rgba(242,237,230,0.6);
     }
 
     html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--black);
-      color: var(--white);
-      font-family: 'Questrial', sans-serif;
-      overflow-x: hidden;
-    }
+    body { background: var(--black); color: var(--white); font-family: 'Questrial', sans-serif; overflow-x: hidden; }
 
     /* ── NAV ── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 22px 40px;
-      transition: background 0.4s, backdrop-filter 0.4s;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 32px;
+      transition: background 0.5s, backdrop-filter 0.5s;
     }
-    nav.scrolled {
-      background: rgba(10,10,10,0.85);
-      backdrop-filter: blur(12px);
-    }
-    .nav-brand {
-      font-family: 'Questrial', sans-serif;
-      letter-spacing: 0.25em;
-      font-size: 13px;
-      text-transform: uppercase;
-      color: var(--white);
-      text-decoration: none;
-    }
+    nav.scrolled { background: rgba(10,10,10,0.9); backdrop-filter: blur(16px); }
+    .nav-brand { font-family: 'Questrial', sans-serif; letter-spacing: 0.3em; font-size: 11px; text-transform: uppercase; color: var(--white); text-decoration: none; }
     .nav-cta {
-      font-family: 'Questrial', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gold);
-      border: 1px solid var(--gold);
-      padding: 9px 20px;
-      text-decoration: none;
-      transition: background 0.25s, color 0.25s;
+      font-family: 'Questrial', sans-serif; font-size: 10px; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold);
+      padding: 8px 18px; text-decoration: none; transition: all 0.25s;
     }
     .nav-cta:hover { background: var(--gold); color: var(--black); }
 
     /* ── HERO ── */
     .hero {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: relative; width: 100vw; height: 100vh;
+      overflow: hidden; display: flex; align-items: flex-end; justify-content: flex-start;
     }
     .hero-video-wrap {
-      position: absolute;
-      inset: -60px;
-      overflow: hidden;
-      pointer-events: none;
+      position: absolute; inset: -60px; overflow: hidden; pointer-events: none;
     }
-    .hero-video-wrap iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
+    .hero-video-wrap iframe { width: 100%; height: 100%; border: none; }
     .hero-mobile-bg {
-      display: none;
-      position: absolute;
-      inset: 0;
+      display: none; position: absolute; inset: 0;
       background: url('Saint_Germain5063__1_.jpeg') center top / cover no-repeat;
     }
     .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.2) 60%, rgba(10,10,10,0.4) 100%);
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.3) 50%, rgba(10,10,10,0.1) 100%);
     }
     .hero-content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      padding: 0 20px;
+      position: relative; z-index: 2;
+      padding: 0 32px 60px;
+      max-width: 900px;
+    }
+    .hero-eyebrow {
+      font-family: 'Questrial', sans-serif; font-size: 10px;
+      letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold);
+      margin-bottom: 20px; display: block;
     }
     .hero-logo {
-      width: clamp(200px, 32vw, 380px);
+      width: clamp(220px, 35vw, 480px);
+      display: block; margin-bottom: 28px;
       filter: brightness(0) invert(1);
     }
     .hero-tagline {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-weight: 300;
-      font-size: clamp(28px, 4.5vw, 52px);
-      color: var(--white);
-      line-height: 1.15;
-    }
-    .hero-label {
-      font-family: 'Questrial', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-weight: 300; font-size: clamp(22px, 3.5vw, 42px);
+      color: rgba(255,255,255,0.75); line-height: 1.3; margin-bottom: 32px;
     }
     .btn-gold {
-      font-family: 'Questrial', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      background: var(--gold);
-      color: var(--black);
-      padding: 13px 34px;
-      text-decoration: none;
-      display: inline-block;
-      transition: opacity 0.25s;
-      margin-top: 6px;
+      font-family: 'Questrial', sans-serif; font-size: 10px; letter-spacing: 0.25em;
+      text-transform: uppercase; background: var(--gold); color: var(--black);
+      padding: 14px 36px; text-decoration: none; display: inline-block; transition: opacity 0.25s;
     }
-    .btn-gold:hover { opacity: 0.85; }
+    .btn-gold:hover { opacity: 0.8; }
 
     /* ── MARQUEE ── */
     .marquee-wrap {
-      border-top: 1px solid var(--gold-dim);
-      border-bottom: 1px solid var(--gold-dim);
-      overflow: hidden;
-      padding: 14px 0;
-      background: var(--black);
+      border-top: 1px solid var(--gold-dim); border-bottom: 1px solid var(--gold-dim);
+      overflow: hidden; padding: 13px 0; background: var(--black);
     }
-    .marquee-track {
-      display: flex;
-      white-space: nowrap;
-      animation: marquee 30s linear infinite;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .marquee-track { animation: none; }
-    }
+    .marquee-track { display: flex; white-space: nowrap; animation: marquee 28s linear infinite; }
+    @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
     .marquee-track span {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 18px;
-      color: var(--gold);
-      padding-right: 60px;
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 16px; color: var(--gold); padding-right: 48px;
     }
-    @keyframes marquee {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* ── EDITORIAL HEADLINE ── */
+    .headline-block {
+      background: var(--black);
+      padding: clamp(80px, 12vw, 160px) clamp(24px, 5vw, 64px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .headline-block h2 {
+      font-family: 'Cormorant Garamond', serif; font-weight: 600;
+      text-transform: uppercase; font-size: clamp(36px, 7.5vw, 110px);
+      line-height: 0.95; letter-spacing: -0.02em; color: var(--white);
+    }
+    .headline-block h2 em {
+      font-style: italic; font-weight: 300; color: rgba(255,255,255,0.35);
     }
 
-    /* ── HEADLINE EDITORIAL ── */
-    .editorial-headline {
-      background: var(--black);
-      padding: clamp(60px, 10vw, 120px) clamp(20px, 6vw, 80px);
+    /* ── FULLBLEED PHOTO ── */
+    .fullbleed {
+      width: 100%; height: 70vh; overflow: hidden; display: block;
     }
-    .editorial-headline h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: clamp(28px, 6vw, 80px);
-      line-height: 1.05;
-      letter-spacing: -0.01em;
-      color: var(--white);
-    }
+    .fullbleed img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
 
     /* ── MOSAIC ── */
     .mosaic {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-template-rows: auto auto;
+      grid-template-columns: 1.2fr 0.8fr 0.8fr;
+      grid-template-rows: 1fr 1fr;
+      height: 100vh;
       gap: 2px;
+    }
+    .mosaic-item { overflow: hidden; }
+    .mosaic-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.7s ease; }
+    .mosaic-item:hover img { transform: scale(1.03); }
+    .mosaic-tall { grid-row: span 2; }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      display: flex; align-items: center; gap: 16px;
+      padding: clamp(48px, 7vw, 80px) clamp(24px, 5vw, 64px) 0;
       background: var(--black);
     }
-    .mosaic-item {
-      overflow: hidden;
-      position: relative;
+    .section-label span {
+      font-family: 'Questrial', sans-serif; font-size: 10px;
+      letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold);
     }
-    .mosaic-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.6s ease;
+    .section-label::after {
+      content: ''; flex: 1; height: 1px; background: rgba(201,168,76,0.25);
     }
-    .mosaic-item:hover img { transform: scale(1.04); }
-    .mosaic-tall {
-      grid-row: span 2;
-    }
-    .mosaic-item:nth-child(1) { min-height: 500px; }
-    .mosaic-item:nth-child(2) { min-height: 245px; }
-    .mosaic-item:nth-child(3) { min-height: 245px; }
-    .mosaic-item:nth-child(4) { min-height: 245px; }
-    .mosaic-item:nth-child(5) { min-height: 245px; }
 
     /* ── PRODUCT GRID ── */
-    .products-section {
-      background: #111;
-      padding: clamp(60px, 8vw, 100px) clamp(20px, 5vw, 60px);
-    }
+    .products-section { background: var(--black); padding-bottom: clamp(60px, 8vw, 100px); }
     .products-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; margin-top: 32px;
     }
-    .product-card {
-      text-decoration: none;
-      color: var(--white);
-      display: block;
-      position: relative;
-      overflow: hidden;
-    }
+    .product-card { text-decoration: none; color: var(--white); display: block; position: relative; overflow: hidden; }
     .product-img-wrap {
-      background: var(--card-bg);
-      aspect-ratio: 3/4;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 30px;
+      background: #f0ede8; aspect-ratio: 3/4;
+      overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 24px;
     }
-    .product-img-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      transition: transform 0.5s ease;
+    .product-img-wrap img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.6s ease; }
+    .product-card:hover .product-img-wrap img { transform: scale(1.06); }
+    .product-info { padding: 16px 0 0; background: var(--black); }
+    .product-name { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 400; display: block; }
+    .product-sub { font-family: 'Questrial', sans-serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-dim); margin-top: 5px; display: block; }
+    .product-link {
+      display: inline-block; margin-top: 14px; font-family: 'Questrial', sans-serif;
+      font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--gold); border-bottom: 1px solid var(--gold-dim); padding-bottom: 2px;
+      opacity: 0; transition: opacity 0.3s;
     }
-    .product-card:hover .product-img-wrap img { transform: scale(1.05); }
-    .product-arrow {
-      position: absolute;
-      bottom: 56px;
-      right: 14px;
-      width: 32px;
-      height: 32px;
-      background: var(--gold);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .product-card:hover .product-arrow { opacity: 1; }
-    .product-arrow svg { width: 14px; height: 14px; fill: var(--black); }
-    .product-info {
-      padding: 16px 14px 20px;
-      background: #111;
-    }
-    .product-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
-      font-weight: 400;
-      display: block;
-    }
-    .product-sub {
-      font-family: 'Questrial', sans-serif;
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--gold-dim);
-      margin-top: 4px;
-      display: block;
-    }
+    .product-card:hover .product-link { opacity: 1; }
 
-    /* ── MANIFESTO ── */
+    /* ── SPLIT MANIFESTO ── */
     .manifesto {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      background: var(--black);
-      min-height: 600px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 80vh; background: var(--black);
     }
     .manifesto-text {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: clamp(40px, 8vw, 100px) clamp(30px, 6vw, 80px);
-      gap: 24px;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: clamp(60px, 10vw, 120px) clamp(32px, 6vw, 80px); gap: 28px;
     }
-    .manifesto-label {
-      font-family: 'Questrial', sans-serif;
-      font-size: 10px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
+    .manifesto-label { font-family: 'Questrial', sans-serif; font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); }
     .manifesto-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: clamp(36px, 4.5vw, 52px);
-      line-height: 1.2;
-      color: var(--white);
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: clamp(40px, 5.5vw, 68px); line-height: 1.1; color: var(--white);
     }
-    .manifesto-body {
-      font-family: 'Questrial', sans-serif;
-      font-size: 14px;
-      line-height: 1.75;
-      color: var(--cream);
-      max-width: 420px;
-    }
-    .manifesto-photo {
-      overflow: hidden;
-    }
-    .manifesto-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      aspect-ratio: 3/4;
-      display: block;
-    }
+    .manifesto-body { font-family: 'Questrial', sans-serif; font-size: 13px; line-height: 1.85; color: var(--cream); max-width: 400px; }
+    .manifesto-photo { overflow: hidden; }
+    .manifesto-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
     /* ── STRIP ── */
-    .strip {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
+    .strip { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .strip-item { overflow: hidden; }
+    .strip-item img { width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block; filter: saturate(0.7); transition: filter 0.5s, transform 0.5s; }
+    .strip-item:hover img { filter: saturate(1); transform: scale(1.02); }
+
+    /* ── BIG QUOTE ── */
+    .big-quote {
+      padding: clamp(80px, 12vw, 140px) clamp(24px, 6vw, 80px);
       background: var(--black);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
-    .strip-item {
-      overflow: hidden;
-      position: relative;
+    .big-quote blockquote {
+      font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300;
+      font-size: clamp(32px, 6vw, 88px); line-height: 1.05;
+      color: var(--white); max-width: 1100px;
     }
-    .strip-item img {
-      width: 100%;
-      aspect-ratio: 2/3;
-      object-fit: cover;
-      display: block;
-      filter: saturate(0.75);
-      transition: filter 0.4s;
-    }
-    .strip-item:hover img { filter: saturate(1); }
+    .big-quote blockquote::before { content: '\201C'; color: var(--gold); }
+    .big-quote blockquote::after { content: '\201D'; color: var(--gold); }
 
     /* ── CTA FINAL ── */
-    .cta-final {
-      position: relative;
-      background: var(--black);
-      padding: clamp(80px, 12vw, 160px) 20px;
-      text-align: center;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 24px;
+    .cta-section {
+      position: relative; background: var(--black);
+      padding: clamp(100px, 15vw, 180px) 32px;
+      text-align: center; overflow: hidden;
+      display: flex; flex-direction: column; align-items: center; gap: 28px;
     }
-    .cta-bg-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 600;
-      font-size: clamp(80px, 18vw, 240px);
-      text-transform: uppercase;
-      white-space: nowrap;
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(201,168,76,0.07);
-      pointer-events: none;
-      user-select: none;
-      letter-spacing: 0.04em;
+    .cta-bg-word {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      font-family: 'Cormorant Garamond', serif; font-weight: 600;
+      font-size: clamp(100px, 22vw, 300px); text-transform: uppercase;
+      white-space: nowrap; color: transparent;
+      -webkit-text-stroke: 1px rgba(201,168,76,0.06);
+      pointer-events: none; user-select: none;
     }
-    .cta-final .hero-logo {
-      width: clamp(200px, 28vw, 340px);
-      position: relative;
-      filter: brightness(0) invert(1);
-    }
-    .cta-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-weight: 300;
-      font-size: clamp(36px, 5vw, 52px);
-      color: var(--white);
-      position: relative;
-    }
-    .cta-sub {
-      font-family: 'Questrial', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--gold);
-      position: relative;
-    }
-    .cta-final .btn-gold { position: relative; }
+    .cta-logo { width: clamp(200px, 28vw, 360px); filter: brightness(0) invert(1); position: relative; }
+    .cta-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: clamp(38px, 5.5vw, 64px); color: var(--white); position: relative; }
+    .cta-sub { font-family: 'Questrial', sans-serif; font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); position: relative; }
 
     /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--gold-dim);
-      padding: 30px clamp(20px, 5vw, 60px);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      padding: 28px clamp(24px, 5vw, 64px);
+      display: flex; align-items: center; justify-content: space-between;
       background: var(--black);
     }
-    .footer-brand {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 15px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--white);
-    }
-    .footer-copy {
-      font-family: 'Questrial', sans-serif;
-      font-size: 11px;
-      color: rgba(255,255,255,0.35);
-    }
+    .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 13px; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+    .footer-copy { font-family: 'Questrial', sans-serif; font-size: 10px; color: rgba(255,255,255,0.25); }
 
-    /* ── SCROLL REVEAL ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(32px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .reveal { opacity: 1; transform: none; transition: none; }
-    }
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
 
-    /* ── RESPONSIVE ── */
+    /* ── MOBILE ── */
     @media (max-width: 768px) {
-      nav { padding: 18px 20px; }
-      .nav-brand { font-size: 11px; }
-
+      nav { padding: 16px 20px; }
       .hero-video-wrap { display: none; }
       .hero-mobile-bg { display: block; }
-
-      .mosaic {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto;
-      }
-      .mosaic-tall { grid-row: span 1; }
-      .mosaic-item { min-height: 200px !important; }
-
+      .hero-content { padding: 0 20px 48px; }
+      .mosaic { grid-template-columns: 1fr 1fr; grid-template-rows: auto; height: auto; }
+      .mosaic-tall { grid-row: span 1; min-height: 280px; }
+      .mosaic-item { min-height: 220px; }
       .products-grid { grid-template-columns: 1fr 1fr; }
-
-      .manifesto {
-        grid-template-columns: 1fr;
-      }
-      .manifesto-photo { order: -1; }
-      .manifesto-photo img { aspect-ratio: 4/3; }
-
-      .strip {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      footer { flex-direction: column; gap: 12px; text-align: center; }
+      .manifesto { grid-template-columns: 1fr; }
+      .manifesto-photo { order: -1; min-height: 55vw; }
+      .strip { grid-template-columns: 1fr 1fr; }
+      footer { flex-direction: column; gap: 10px; text-align: center; }
     }
-
     @media (max-width: 480px) {
       .products-grid { grid-template-columns: 1fr; }
     }
@@ -473,232 +262,198 @@
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav id="nav">
-    <a href="#" class="nav-brand">Saint Germain</a>
-    <a href="https://www.saintgermainbrand.com.br/colecoes/vintage" class="nav-cta" target="_blank" rel="noopener">Ver Coleção</a>
-  </nav>
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-brand">Saint Germain</a>
+  <a href="https://www.saintgermainbrand.com.br/colecoes/vintage" class="nav-cta" target="_blank" rel="noopener">Ver Coleção</a>
+</nav>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-video-wrap">
-      <iframe
-        src="https://www.youtube.com/embed/_uTAxo1fF60?autoplay=1&mute=1&loop=1&playlist=_uTAxo1fF60&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
-        allow="autoplay; encrypted-media"
-        allowfullscreen
-        title="Saint Germain Vintage Campaign"
-      ></iframe>
-    </div>
-    <div class="hero-mobile-bg"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <img src="vintage-logo.png" alt="Vintage" class="hero-logo">
-      <p class="hero-tagline">Feito para durar além do tempo.</p>
-      <p class="hero-label">Relógios Femininos · Coleção Permanente</p>
-      <a href="#produtos" class="btn-gold">Explorar</a>
-    </div>
-  </section>
-
-  <!-- MARQUEE -->
-  <div class="marquee-wrap">
-    <div class="marquee-track">
-      <span>Elegância atemporal · Caixa dourada · Pulseiras exclusivas · Relógio feminino · Saint Germain · Feito para durar ·&nbsp;</span>
-      <span>Elegância atemporal · Caixa dourada · Pulseiras exclusivas · Relógio feminino · Saint Germain · Feito para durar ·&nbsp;</span>
-    </div>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-video-wrap">
+    <iframe
+      src="https://www.youtube.com/embed/_uTAxo1fF60?autoplay=1&mute=1&loop=1&playlist=_uTAxo1fF60&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
+      allow="autoplay; encrypted-media" allowfullscreen title="Saint Germain Vintage"></iframe>
   </div>
+  <div class="hero-mobile-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">Relógios Femininos · Coleção Permanente</span>
+    <img src="vintage-logo.png" alt="Saint Germain Vintage" class="hero-logo">
+    <p class="hero-tagline">Feito para durar além do tempo.</p>
+    <a href="#produtos" class="btn-gold">Explorar a Coleção</a>
+  </div>
+</section>
 
-  <!-- HEADLINE EDITORIAL -->
-  <section class="editorial-headline reveal">
-    <h2>Seis modelos. Uma coleção que não segue tendência — ela define estilo.</h2>
-  </section>
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>Elegância atemporal &nbsp;·&nbsp; Caixa dourada &nbsp;·&nbsp; Pulseiras exclusivas &nbsp;·&nbsp; Relógio feminino &nbsp;·&nbsp; Saint Germain &nbsp;·&nbsp; Feito para durar &nbsp;·&nbsp;&nbsp;</span>
+    <span>Elegância atemporal &nbsp;·&nbsp; Caixa dourada &nbsp;·&nbsp; Pulseiras exclusivas &nbsp;·&nbsp; Relógio feminino &nbsp;·&nbsp; Saint Germain &nbsp;·&nbsp; Feito para durar &nbsp;·&nbsp;&nbsp;</span>
+  </div>
+</div>
 
-  <!-- MOSAIC -->
-  <section class="mosaic">
-    <div class="mosaic-item mosaic-tall">
-      <img src="Saint_Germain5063__1_.jpeg" alt="Campanha Vintage">
-    </div>
-    <div class="mosaic-item">
-      <img src="Saint_Germain5124.jpeg" alt="Campanha Vintage">
-    </div>
-    <div class="mosaic-item">
-      <img src="Saint_Germain5155.jpeg" alt="Campanha Vintage">
-    </div>
-    <div class="mosaic-item">
-      <img src="Saint_Germain5135.jpeg" alt="Campanha Vintage">
-    </div>
-    <div class="mosaic-item">
-      <img src="Saint_Germain5020.jpeg" alt="Campanha Vintage">
-    </div>
-  </section>
+<!-- HEADLINE EDITORIAL -->
+<section class="headline-block reveal">
+  <h2>Seis<br>modelos.<br><em>Uma coleção que<br>não segue tendência —<br>ela define estilo.</em></h2>
+</section>
 
-  <!-- PRODUCT GRID -->
-  <section class="products-section" id="produtos">
-    <div class="products-grid">
+<!-- FULLBLEED -->
+<div class="fullbleed">
+  <img src="Saint_Germain5063__1_.jpeg" alt="Campanha Saint Germain Vintage">
+</div>
 
-      <a class="product-card reveal" href="https://www.saintgermainbrand.com.br/produtos/relogio-feminino-redondo-vintage-abbey-dourado-caixa-dourada-e-bisel-removivel/" target="_blank" rel="noopener">
-        <div class="product-img-wrap">
-          <img src="068.jpg" alt="Abbey">
-        </div>
-        <div class="product-arrow">
-          <svg viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4" stroke="#0a0a0a" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="product-info">
-          <span class="product-name">Abbey</span>
-          <span class="product-sub">Bisel removível · Elo dourado</span>
-        </div>
-      </a>
+<!-- MOSAIC -->
+<section class="mosaic">
+  <div class="mosaic-item mosaic-tall">
+    <img src="Saint_Germain5124.jpeg" alt="Campanha Vintage">
+  </div>
+  <div class="mosaic-item">
+    <img src="Saint_Germain5155.jpeg" alt="Campanha Vintage">
+  </div>
+  <div class="mosaic-item">
+    <img src="Saint_Germain5020.jpeg" alt="Campanha Vintage">
+  </div>
+  <div class="mosaic-item">
+    <img src="Saint_Germain5135.jpeg" alt="Campanha Vintage">
+  </div>
+  <div class="mosaic-item">
+    <img src="Saint_Germain5028.jpeg" alt="Campanha Vintage">
+  </div>
+</section>
 
-      <a class="product-card reveal" href="https://www.saintgermainbrand.com.br/produtos/relogio-feminino-redondo-vintage-amber-pulseira-croco-marrom-e-caixa-dourada-com-numeros-romanos/" target="_blank" rel="noopener">
-        <div class="product-img-wrap">
-          <img src="Relo_gio-Feminino-Redondo-Vintage-Abbey-Dourado-Caixa-Dourada-Bisel-Removi_vel.jpg" alt="Amber">
-        </div>
-        <div class="product-arrow">
-          <svg viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4" stroke="#0a0a0a" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="product-info">
-          <span class="product-name">Amber</span>
-          <span class="product-sub">Pulseira croco · Algarismos romanos</span>
-        </div>
-      </a>
+<!-- PRODUTOS -->
+<div class="section-label"><span>Coleção Vintage</span></div>
+<section class="products-section" id="produtos">
+  <div class="products-grid" style="padding: 0 clamp(24px,5vw,64px);">
 
-      <a class="product-card reveal" href="https://www.saintgermainbrand.com.br/produtos/relogio-feminino-redondo-vintage-lana-dourado/" target="_blank" rel="noopener">
-        <div class="product-img-wrap">
-          <img src="053.jpg" alt="Lana">
-        </div>
-        <div class="product-arrow">
-          <svg viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4" stroke="#0a0a0a" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="product-info">
-          <span class="product-name">Lana</span>
-          <span class="product-sub">Elo torcido · Caixa dourada</span>
-        </div>
-      </a>
+    <a class="product-card reveal" href="https://www.saintgermainbrand.com.br/produtos/relogio-feminino-redondo-vintage-abbey-dourado-caixa-dourada-e-bisel-removivel/" target="_blank" rel="noopener">
+      <div class="product-img-wrap"><img src="068.jpg" alt="Abbey"></div>
+      <div class="product-info">
+        <span class="product-name">Abbey</span>
+        <span class="product-sub">Bisel removível · Elo dourado</span>
+        <span class="product-link">Ver produto →</span>
+      </div>
+    </a>
 
-      <a class="product-card reveal" href="https://www.saintgermainbrand.com.br/produtos/relogio-feminino-redondo-bracelete-gala-vintage-dourado/" target="_blank" rel="noopener">
-        <div class="product-img-wrap">
-          <img src="057.jpg" alt="Gala">
-        </div>
-        <div class="product-arrow">
-          <svg viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4" stroke="#0a0a0a" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="product-info">
-          <span class="product-name">Gala</span>
-          <span class="product-sub">Bracelete largo · Mostrador árabe</span>
-        </div>
-      </a>
+    <a class="product-card reveal" href="https://www.saintgermainbrand.com.br/produtos/relogio-feminino-redondo-vintage-amber-pulseira-croco-marrom-e-caixa-dourada-com-numeros-romanos/" target="_blank" rel="noopener">
+      <div class="product-img-wrap"><img src="Relo_gio-Feminino-Redondo-Vintage-Abbey-Dourado-Caixa-Dourada-Bisel-Removi_vel.jpg" alt="Amber"></div>
+      <div class="product-info">
+        <span class="product-name">Amber</span>
+        <span class="product-sub">Pulseira croco · Algarismos romanos</span>
+        <span class="product-link">Ver produto →</span>
+      </div>
+    </a>
 
-      <a class="product-card reveal" href="https://www.saintgermainbrand.com.br/produtos/relogio-feminino-redondo-vintage-opalini-dourado-com-fundo-perolado/" target="_blank" rel="noopener">
-        <div class="product-img-wrap">
-          <img src="055.jpg" alt="Opalini">
-        </div>
-        <div class="product-arrow">
-          <svg viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4" stroke="#0a0a0a" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="product-info">
-          <span class="product-name">Opalini</span>
-          <span class="product-sub">Fundo perolado · Bracelete oval</span>
-        </div>
-      </a>
+    <a class="product-card reveal" href="https://www.saintgermainbrand.com.br/produtos/relogio-feminino-redondo-vintage-lana-dourado/" target="_blank" rel="noopener">
+      <div class="product-img-wrap"><img src="053.jpg" alt="Lana"></div>
+      <div class="product-info">
+        <span class="product-name">Lana</span>
+        <span class="product-sub">Elo torcido · Caixa dourada</span>
+        <span class="product-link">Ver produto →</span>
+      </div>
+    </a>
 
-      <a class="product-card reveal" href="https://www.saintgermainbrand.com.br/produtos/relogio-feminino-pequeno-oval-mini-dourado/" target="_blank" rel="noopener">
-        <div class="product-img-wrap">
-          <img src="072.jpg" alt="Oval Mini">
-        </div>
-        <div class="product-arrow">
-          <svg viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4" stroke="#0a0a0a" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="product-info">
-          <span class="product-name">Oval Mini</span>
-          <span class="product-sub">Caixa oval · Bracelete pantera</span>
-        </div>
-      </a>
+    <a class="product-card reveal" href="https://www.saintgermainbrand.com.br/produtos/relogio-feminino-redondo-bracelete-gala-vintage-dourado/" target="_blank" rel="noopener">
+      <div class="product-img-wrap"><img src="057.jpg" alt="Gala"></div>
+      <div class="product-info">
+        <span class="product-name">Gala</span>
+        <span class="product-sub">Bracelete largo · Mostrador árabe</span>
+        <span class="product-link">Ver produto →</span>
+      </div>
+    </a>
 
-    </div>
-  </section>
+    <a class="product-card reveal" href="https://www.saintgermainbrand.com.br/produtos/relogio-feminino-redondo-vintage-opalini-dourado-com-fundo-perolado/" target="_blank" rel="noopener">
+      <div class="product-img-wrap"><img src="055.jpg" alt="Opalini"></div>
+      <div class="product-info">
+        <span class="product-name">Opalini</span>
+        <span class="product-sub">Fundo perolado · Bracelete oval</span>
+        <span class="product-link">Ver produto →</span>
+      </div>
+    </a>
 
-  <!-- MANIFESTO -->
-  <section class="manifesto">
-    <div class="manifesto-text reveal">
-      <p class="manifesto-label">Saint Germain</p>
-      <h2 class="manifesto-title">
-        "O tempo que<br>
-        você carrega<br>
-        no pulso."
-      </h2>
-      <p class="manifesto-body">
-        A coleção Vintage nasce da crença de que um acessório
-        não precisa gritar para ser notado. Dourado sem exagero.
-        Detalhes que aparecem de perto. Pulseiras que parecem
-        joias — porque são.
-      </p>
-    </div>
-    <div class="manifesto-photo">
-      <img src="Saint_Germain5042.jpeg" alt="Campanha Saint Germain Vintage">
-    </div>
-  </section>
+    <a class="product-card reveal" href="https://www.saintgermainbrand.com.br/produtos/relogio-feminino-pequeno-oval-mini-dourado/" target="_blank" rel="noopener">
+      <div class="product-img-wrap"><img src="072.jpg" alt="Oval Mini"></div>
+      <div class="product-info">
+        <span class="product-name">Oval Mini</span>
+        <span class="product-sub">Caixa oval · Bracelete pantera</span>
+        <span class="product-link">Ver produto →</span>
+      </div>
+    </a>
 
-  <!-- STRIP -->
-  <section class="strip">
-    <div class="strip-item">
-      <img src="Saint_Germain5063__1_.jpeg" alt="Campanha">
-    </div>
-    <div class="strip-item">
-      <img src="Copy_of_Saint_German_24-06_798.jpg" alt="Campanha">
-    </div>
-    <div class="strip-item">
-      <img src="Copy_of_Saint_German_24-06_818-Recuperado.jpg" alt="Campanha">
-    </div>
-    <div class="strip-item">
-      <img src="Saint_Germain5028.jpeg" alt="Campanha">
-    </div>
-  </section>
+  </div>
+</section>
 
-  <!-- CTA FINAL -->
-  <section class="cta-final">
-    <div class="cta-bg-text">VINTAGE</div>
-    <img src="vintage-logo.png" alt="Vintage" class="hero-logo">
-    <h2 class="cta-title">Escolha o seu.</h2>
-    <p class="cta-sub">Seis modelos · Entrega para todo o Brasil</p>
-    <a href="https://www.saintgermainbrand.com.br/colecoes/vintage" class="btn-gold" target="_blank" rel="noopener">Ver Coleção Completa</a>
-  </section>
+<!-- BIG QUOTE -->
+<div class="big-quote reveal">
+  <blockquote>O tempo que você carrega no pulso.</blockquote>
+</div>
 
-  <!-- FOOTER -->
-  <footer>
-    <span class="footer-brand">Saint Germain Brand</span>
-    <span class="footer-copy">© 2025 — Todos os direitos reservados</span>
-  </footer>
+<!-- MANIFESTO -->
+<section class="manifesto">
+  <div class="manifesto-text reveal">
+    <p class="manifesto-label">Saint Germain</p>
+    <h2 class="manifesto-title">Dourado sem<br>exagero.</h2>
+    <p class="manifesto-body">A coleção Vintage nasce da crença de que um acessório não precisa gritar para ser notado. Detalhes que aparecem de perto. Pulseiras que parecem joias — porque são.</p>
+  </div>
+  <div class="manifesto-photo">
+    <img src="Saint_Germain5042.jpeg" alt="Campanha Saint Germain Vintage">
+  </div>
+</section>
 
-  <script>
-    // Nav scroll
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 60);
-    }, { passive: true });
+<!-- STRIP -->
+<section class="strip">
+  <div class="strip-item"><img src="Saint_Germain5063__1_.jpeg" alt="Campanha"></div>
+  <div class="strip-item"><img src="Copy_of_Saint_German_24-06_798.jpg" alt="Campanha"></div>
+  <div class="strip-item"><img src="Copy_of_Saint_German_24-06_818-Recuperado.jpg" alt="Campanha"></div>
+  <div class="strip-item"><img src="Saint_Germain5028.jpeg" alt="Campanha"></div>
+</section>
 
-    // Mobile hero: hide iframe, show fallback image
-    if (window.innerWidth < 768) {
-      const wrap = document.querySelector('.hero-video-wrap');
-      const mob = document.querySelector('.hero-mobile-bg');
-      if (wrap) wrap.style.display = 'none';
-      if (mob) mob.style.display = 'block';
-    }
+<!-- CTA FINAL -->
+<section class="cta-section">
+  <div class="cta-bg-word">VINTAGE</div>
+  <img src="vintage-logo.png" alt="Vintage" class="cta-logo">
+  <h2 class="cta-title">Escolha o seu.</h2>
+  <p class="cta-sub">Seis modelos · Entrega para todo o Brasil</p>
+  <a href="https://www.saintgermainbrand.com.br/colecoes/vintage" class="btn-gold" target="_blank" rel="noopener">Ver Coleção Completa</a>
+</section>
 
-    // Scroll reveal with stagger on product cards
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
+<!-- FOOTER -->
+<footer>
+  <span class="footer-brand">Saint Germain Brand</span>
+  <span class="footer-copy">© 2025 — Todos os direitos reservados</span>
+</footer>
 
-    // Stagger product cards
-    document.querySelectorAll('.products-grid .product-card').forEach((card, i) => {
-      card.style.transitionDelay = `${i * 80}ms`;
+<script>
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  }, { passive: true });
+
+  // Mobile hero fallback
+  if (window.innerWidth < 768) {
+    const wrap = document.querySelector('.hero-video-wrap');
+    if (wrap) wrap.style.display = 'none';
+    const mob = document.querySelector('.hero-mobile-bg');
+    if (mob) mob.style.display = 'block';
+  }
+
+  // Scroll reveal with stagger on product cards
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
     });
+  }, { threshold: 0.1 });
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-  </script>
+  document.querySelectorAll('.products-grid .product-card').forEach((card, i) => {
+    card.style.transitionDelay = `${i * 80}ms`;
+  });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
