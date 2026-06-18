@@ -650,7 +650,22 @@
     @media (max-width: 600px) {
       .hero-logo { height: 44px; }
 
-      .launches-grid { grid-template-columns: 1fr; }
+      .launches-grid {
+        grid-template-columns: unset;
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        gap: 16px;
+        padding-bottom: 16px;
+        scrollbar-width: none;
+      }
+      .launches-grid::-webkit-scrollbar { display: none; }
+      .launch-card {
+        flex: 0 0 75vw;
+        scroll-snap-align: start;
+      }
     }
 
     /* ── REDUCED MOTION ──────────────────────────────────────────── */
@@ -907,11 +922,6 @@
 
     // ───────────────────────────────────────────────────────────────
 
-    // ── MOBILE DETECTION ────────────────────────────────────────────
-    if (window.innerWidth < 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-      document.getElementById('hero-video-wrap').style.display = 'none';
-      document.getElementById('hero-mobile-bg').style.display = 'block';
-    }
 
     // ── NAV SCROLL ──────────────────────────────────────────────────
     const nav = document.getElementById('main-nav');
@@ -1066,6 +1076,17 @@
         </a>
       `);
     });
+
+    // ── LAUNCHES MOBILE CAROUSEL AUTO-SCROLL ─────────────────────────
+    if (window.innerWidth <= 600) {
+      const lg = document.getElementById('launches-grid');
+      let launchIdx = 0;
+      setInterval(() => {
+        launchIdx = (launchIdx + 1) % LAUNCHES.length;
+        const card = lg.children[launchIdx];
+        if (card) lg.scrollTo({ left: card.offsetLeft, behavior: 'smooth' });
+      }, 3000);
+    }
 
     // ── PARALLAX GALLERY ─────────────────────────────────────────────
     (function() {
