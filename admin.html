@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Saint Germain Vintage</title>
+  <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #000; --white: #fff;
+      --gray: #f5f5f5; --gray-mid: #d9d9d9; --gray-dark: #4a4a4a;
+      --green: #2ecc71; --red: #e74c3c;
+    }
+    body {
+      font-family: 'Questrial', sans-serif;
+      background: #fafafa;
+      color: #111;
+      min-height: 100vh;
+    }
+    header {
+      background: var(--black);
+      color: var(--white);
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header h1 { font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; }
+    header a {
+      font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.6); text-decoration: none;
+    }
+    header a:hover { color: #fff; }
+
+    /* AUTH */
+    #auth-screen {
+      max-width: 480px; margin: 80px auto; padding: 0 24px;
+    }
+    #auth-screen h2 { font-size: 20px; margin-bottom: 8px; }
+    #auth-screen p { font-size: 13px; color: var(--gray-dark); margin-bottom: 32px; line-height: 1.6; }
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 6px; color: var(--gray-dark); }
+    .field input {
+      width: 100%; padding: 10px 12px; border: 1px solid var(--gray-mid);
+      font-family: 'Questrial', sans-serif; font-size: 13px;
+      background: var(--white); outline: none;
+    }
+    .field input:focus { border-color: var(--black); }
+    .btn {
+      display: inline-block; padding: 12px 32px;
+      font-family: 'Questrial', sans-serif; font-size: 11px;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      cursor: pointer; border: 1px solid var(--black);
+      background: var(--black); color: var(--white);
+      transition: background 0.3s, color 0.3s;
+    }
+    .btn:hover { background: var(--white); color: var(--black); }
+    .btn-outline { background: var(--white); color: var(--black); }
+    .btn-outline:hover { background: var(--black); color: var(--white); }
+
+    /* MAIN */
+    #main-screen { display: none; max-width: 960px; margin: 0 auto; padding: 48px 24px 80px; }
+    .section-block {
+      border: 1px solid var(--gray-mid);
+      background: var(--white);
+      margin-bottom: 32px;
+      overflow: hidden;
+    }
+    .section-block-header {
+      background: var(--black);
+      color: var(--white);
+      padding: 14px 24px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-block-header h3 { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; }
+    .section-block-header span { font-size: 11px; color: rgba(255,255,255,0.4); }
+    .slots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+      padding: 24px;
+    }
+    .slot {
+      border: 1px dashed var(--gray-mid);
+      padding: 12px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      position: relative;
+      background: var(--gray);
+    }
+    .slot:hover { border-color: var(--black); }
+    .slot.dragover { border-color: var(--black); background: #f0f0f0; }
+    .slot-preview {
+      width: 100%; aspect-ratio: 3/4;
+      object-fit: cover; display: block;
+      background: var(--gray-mid);
+      margin-bottom: 10px;
+    }
+    .slot-preview-logo {
+      width: 100%; aspect-ratio: 3/1;
+      object-fit: contain; display: block;
+      background: var(--black);
+      padding: 16px;
+      margin-bottom: 10px;
+    }
+    .slot-name { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-dark); margin-bottom: 4px; }
+    .slot-filename { font-size: 11px; color: #999; word-break: break-all; }
+    .slot-status {
+      position: absolute; top: 8px; right: 8px;
+      font-size: 10px; padding: 2px 6px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .slot-status.ok { background: var(--green); color: var(--white); }
+    .slot-status.pending { background: #f39c12; color: var(--white); }
+    .slot-status.error { background: var(--red); color: var(--white); }
+    .slot input[type=file] { display: none; }
+    .slot-upload-hint { font-size: 10px; color: #aaa; text-align: center; padding: 24px 8px; }
+
+    .upload-btn-row {
+      padding: 16px 24px 24px;
+      display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+    }
+    .status-msg { font-size: 12px; color: var(--gray-dark); }
+    .status-msg.ok { color: var(--green); }
+    .status-msg.error { color: var(--red); }
+
+    #config-bar {
+      background: var(--white); border-bottom: 1px solid var(--gray-mid);
+      padding: 12px 24px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    #config-bar span { font-size: 11px; color: var(--gray-dark); }
+    #config-bar strong { font-size: 11px; color: var(--black); }
+    #logout-btn { font-size: 11px; cursor: pointer; text-decoration: underline; color: var(--gray-dark); background: none; border: none; }
+    #logout-btn:hover { color: var(--black); }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Saint Germain — Painel de Upload</h1>
+  <a href="index.html" target="_blank">↗ Ver LP</a>
+</header>
+
+<!-- AUTH SCREEN -->
+<div id="auth-screen">
+  <h2>Configurar acesso</h2>
+  <p>Para subir as fotos diretamente no repositório, você precisa de um <strong>Token do GitHub</strong> com permissão de escrita (<code>contents: write</code>).<br><br>
+  Crie em: <strong>github.com → Settings → Developer Settings → Personal access tokens → Fine-grained tokens</strong> → selecione o repositório <strong>lp-vintage</strong> → permissão <strong>Contents: Read and write</strong>.</p>
+
+  <div class="field">
+    <label>Token do GitHub</label>
+    <input type="password" id="token-input" placeholder="github_pat_...">
+  </div>
+  <div class="field">
+    <label>Usuário GitHub</label>
+    <input type="text" id="owner-input" placeholder="rafaellafederico">
+  </div>
+  <div class="field">
+    <label>Nome do Repositório</label>
+    <input type="text" id="repo-input" placeholder="lp-vintage">
+  </div>
+  <div class="field">
+    <label>Branch</label>
+    <input type="text" id="branch-input" placeholder="claude/hopeful-cannon-j9bnx4">
+  </div>
+  <br>
+  <button class="btn" onclick="saveConfig()">Entrar</button>
+</div>
+
+<!-- MAIN SCREEN -->
+<div id="main-screen">
+  <div id="config-bar">
+    <span>Repositório: <strong id="cfg-repo"></strong></span>
+    <span>Branch: <strong id="cfg-branch"></strong></span>
+    <button id="logout-btn" onclick="logout()">Trocar configuração</button>
+  </div>
+
+  <!-- SEÇÃO: LOGO / HERO -->
+  <div class="section-block" style="margin-top:32px">
+    <div class="section-block-header">
+      <h3>Logo principal</h3>
+      <span>Aparece no hero, nav e rodapé</span>
+    </div>
+    <div class="slots-grid" id="slots-logo"></div>
+    <div class="upload-btn-row">
+      <button class="btn" onclick="uploadSection('logo')">Subir logo</button>
+      <span class="status-msg" id="status-logo"></span>
+    </div>
+  </div>
+
+  <!-- SEÇÃO: GALERIA PARALLAX -->
+  <div class="section-block">
+    <div class="section-block-header">
+      <h3>Galeria Parallax</h3>
+      <span>Seção 6 — grid interativo com 13 fotos</span>
+    </div>
+    <div class="slots-grid" id="slots-gallery"></div>
+    <div class="upload-btn-row">
+      <button class="btn" onclick="uploadSection('gallery')">Subir fotos da galeria</button>
+      <span class="status-msg" id="status-gallery"></span>
+    </div>
+  </div>
+
+  <!-- SEÇÃO: BEST SELLERS -->
+  <div class="section-block">
+    <div class="section-block-header">
+      <h3>Best Sellers</h3>
+      <span>Fotos dos produtos no carrossel</span>
+    </div>
+    <div class="slots-grid" id="slots-bestsellers"></div>
+    <div class="upload-btn-row">
+      <button class="btn" onclick="uploadSection('bestsellers')">Subir fotos Best Sellers</button>
+      <span class="status-msg" id="status-bestsellers"></span>
+    </div>
+  </div>
+
+  <!-- SEÇÃO: LANÇAMENTOS -->
+  <div class="section-block">
+    <div class="section-block-header">
+      <h3>Últimos Lançamentos</h3>
+      <span>3 fotos dos produtos novos</span>
+    </div>
+    <div class="slots-grid" id="slots-launches"></div>
+    <div class="upload-btn-row">
+      <button class="btn" onclick="uploadSection('launches')">Subir fotos Lançamentos</button>
+      <span class="status-msg" id="status-launches"></span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────────────────
+const SLOTS_CONFIG = {
+  logo: [
+    { key: 'logo-sg',      file: 'sg-logo.png',      label: 'Logo SG',        previewClass: 'slot-preview-logo' },
+    { key: 'logo-vintage', file: 'vintage-logo.png',  label: 'Logo Vintage',   previewClass: 'slot-preview-logo' },
+  ],
+  gallery: [
+    { key: 'gal-0',  file: 'Saint_Germain5020.jpeg',              label: 'Galeria 1' },
+    { key: 'gal-1',  file: 'Saint_Germain5028.jpeg',              label: 'Galeria 2' },
+    { key: 'gal-2',  file: 'Saint_Germain5042.jpeg',              label: 'Galeria 3' },
+    { key: 'gal-3',  file: 'Copy_of_Saint_German_24-06_798.jpg',  label: 'Galeria 4' },
+    { key: 'gal-4',  file: 'Copy_of_Saint_German_24-06_818-Recuperado.jpg', label: 'Galeria 5' },
+    { key: 'gal-5',  file: '053.jpg',   label: 'Galeria 6' },
+    { key: 'gal-6',  file: '055.jpg',   label: 'Galeria 7' },
+    { key: 'gal-7',  file: '057.jpg',   label: 'Galeria 8' },
+    { key: 'gal-8',  file: '068.jpg',   label: 'Galeria 9' },
+    { key: 'gal-9',  file: 'amber.jpg', label: 'Galeria 10' },
+  ],
+  bestsellers: [
+    { key: 'bs-abbey',  file: '068.jpg',   label: 'Abbey' },
+    { key: 'bs-amber',  file: 'amber.jpg', label: 'Amber' },
+    { key: 'bs-lana',   file: '053.jpg',   label: 'Lana' },
+    { key: 'bs-gala',   file: '057.jpg',   label: 'Gala' },
+    { key: 'bs-opalini',file: '055.jpg',   label: 'Opalini' },
+    { key: 'bs-oval',   file: '072.jpg',   label: 'Oval Mini' },
+  ],
+  launches: [
+    { key: 'launch-1', file: 'produto-lancamento-1.jpg', label: 'Lançamento 1' },
+    { key: 'launch-2', file: 'produto-lancamento-2.jpg', label: 'Lançamento 2' },
+    { key: 'launch-3', file: 'produto-lancamento-3.jpg', label: 'Lançamento 3' },
+  ],
+};
+
+// pending uploads: { key → { file, blob, dataUrl } }
+const pending = {};
+
+// ── AUTH ─────────────────────────────────────────────────────────────
+function saveConfig() {
+  const cfg = {
+    token:  document.getElementById('token-input').value.trim(),
+    owner:  document.getElementById('owner-input').value.trim() || 'rafaellafederico',
+    repo:   document.getElementById('repo-input').value.trim()  || 'lp-vintage',
+    branch: document.getElementById('branch-input').value.trim() || 'claude/hopeful-cannon-j9bnx4',
+  };
+  if (!cfg.token) { alert('Cole o token do GitHub.'); return; }
+  localStorage.setItem('sg_admin_cfg', JSON.stringify(cfg));
+  showMain(cfg);
+}
+
+function logout() {
+  localStorage.removeItem('sg_admin_cfg');
+  document.getElementById('main-screen').style.display = 'none';
+  document.getElementById('auth-screen').style.display = 'block';
+}
+
+function getConfig() {
+  try { return JSON.parse(localStorage.getItem('sg_admin_cfg')); } catch { return null; }
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  const cfg = getConfig();
+  if (cfg && cfg.token) { showMain(cfg); }
+  // pre-fill fields
+  document.getElementById('owner-input').value  = 'rafaellafederico';
+  document.getElementById('repo-input').value   = 'lp-vintage';
+  document.getElementById('branch-input').value = 'claude/hopeful-cannon-j9bnx4';
+});
+
+function showMain(cfg) {
+  document.getElementById('auth-screen').style.display  = 'none';
+  document.getElementById('main-screen').style.display  = 'block';
+  document.getElementById('cfg-repo').textContent   = `${cfg.owner}/${cfg.repo}`;
+  document.getElementById('cfg-branch').textContent = cfg.branch;
+
+  // render all slot sections
+  Object.keys(SLOTS_CONFIG).forEach(section => renderSlots(section));
+}
+
+// ── RENDER SLOTS ─────────────────────────────────────────────────────
+function renderSlots(section) {
+  const container = document.getElementById(`slots-${section}`);
+  container.innerHTML = '';
+  SLOTS_CONFIG[section].forEach(slot => {
+    const isLogo = slot.previewClass === 'slot-preview-logo';
+    const previewSrc = pending[slot.key]?.dataUrl || slot.file;
+    const div = document.createElement('div');
+    div.className = 'slot';
+    div.dataset.key = slot.key;
+    div.innerHTML = `
+      <div class="slot-status ${pending[slot.key] ? 'pending' : ''}" id="st-${slot.key}">${pending[slot.key] ? 'Pendente' : ''}</div>
+      <img class="${slot.previewClass || 'slot-preview'}" id="prev-${slot.key}"
+           src="${previewSrc}" alt="${slot.label}"
+           onerror="this.src='data:image/svg+xml,<svg xmlns=\\'http://www.w3.org/2000/svg\\'/>'"
+      >
+      <div class="slot-name">${slot.label}</div>
+      <div class="slot-filename">${slot.file}</div>
+      ${!pending[slot.key] ? `<div class="slot-upload-hint">Clique ou arraste a foto aqui</div>` : ''}
+      <input type="file" id="inp-${slot.key}" accept="image/*">
+    `;
+    div.addEventListener('click', () => div.querySelector('input[type=file]').click());
+    div.addEventListener('dragover', e => { e.preventDefault(); div.classList.add('dragover'); });
+    div.addEventListener('dragleave', () => div.classList.remove('dragover'));
+    div.addEventListener('drop', e => {
+      e.preventDefault(); div.classList.remove('dragover');
+      const f = e.dataTransfer.files[0];
+      if (f) handleFile(slot.key, f);
+    });
+    div.querySelector('input[type=file]').addEventListener('change', e => {
+      if (e.target.files[0]) handleFile(slot.key, e.target.files[0]);
+    });
+    container.appendChild(div);
+  });
+}
+
+function handleFile(key, file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    pending[key] = { file, blob: e.target.result.split(',')[1], dataUrl: e.target.result };
+    // update preview
+    const prev = document.getElementById(`prev-${key}`);
+    if (prev) prev.src = e.target.result;
+    const st = document.getElementById(`st-${key}`);
+    if (st) { st.textContent = 'Pendente'; st.className = 'slot-status pending'; }
+    const hint = document.querySelector(`[data-key="${key}"] .slot-upload-hint`);
+    if (hint) hint.remove();
+  };
+  reader.readAsDataURL(file);
+}
+
+// ── UPLOAD SECTION ───────────────────────────────────────────────────
+async function uploadSection(section) {
+  const cfg = getConfig();
+  if (!cfg) { alert('Configure o acesso primeiro.'); return; }
+
+  const slots = SLOTS_CONFIG[section];
+  const toUpload = slots.filter(s => pending[s.key]);
+  if (!toUpload.length) {
+    setStatus(section, 'Nenhuma foto nova para subir.', '');
+    return;
+  }
+
+  setStatus(section, `Subindo ${toUpload.length} foto(s)...`, '');
+
+  let ok = 0, fail = 0;
+  for (const slot of toUpload) {
+    const p = pending[slot.key];
+    try {
+      // check if file exists to get sha
+      let sha = null;
+      const checkRes = await fetch(
+        `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponent(slot.file)}?ref=${encodeURIComponent(cfg.branch)}`,
+        { headers: { Authorization: `Bearer ${cfg.token}`, Accept: 'application/vnd.github+json' } }
+      );
+      if (checkRes.ok) {
+        const data = await checkRes.json();
+        sha = data.sha;
+      }
+
+      const body = {
+        message: `upload: ${slot.file} via admin panel`,
+        content: p.blob,
+        branch:  cfg.branch,
+      };
+      if (sha) body.sha = sha;
+
+      const res = await fetch(
+        `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponent(slot.file)}`,
+        {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${cfg.token}`,
+            Accept: 'application/vnd.github+json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        }
+      );
+
+      if (res.ok) {
+        ok++;
+        delete pending[slot.key];
+        const st = document.getElementById(`st-${slot.key}`);
+        if (st) { st.textContent = '✓ Enviado'; st.className = 'slot-status ok'; }
+      } else {
+        const err = await res.json();
+        console.error(slot.file, err);
+        fail++;
+        const st = document.getElementById(`st-${slot.key}`);
+        if (st) { st.textContent = 'Erro'; st.className = 'slot-status error'; }
+      }
+    } catch (e) {
+      console.error(e);
+      fail++;
+    }
+  }
+
+  if (fail === 0) {
+    setStatus(section, `✓ ${ok} foto(s) enviada(s) com sucesso! A LP atualiza em ~1 min.`, 'ok');
+  } else {
+    setStatus(section, `${ok} enviada(s), ${fail} com erro. Verifique o token e tente novamente.`, 'error');
+  }
+}
+
+function setStatus(section, msg, type) {
+  const el = document.getElementById(`status-${section}`);
+  if (!el) return;
+  el.textContent = msg;
+  el.className = `status-msg ${type}`;
+}
+</script>
+</body>
+</html>
