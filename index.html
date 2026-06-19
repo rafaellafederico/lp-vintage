@@ -43,6 +43,9 @@
 
     /* ── NAV ─────────────────────────────────────────────────────── */
     nav {
+      display: none !important;
+    }
+    nav._hidden {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 999;
@@ -367,16 +370,23 @@
     /* ── LAUNCHES ────────────────────────────────────────────────── */
     .launches {
       background: var(--gray-light);
-      padding: 100px 48px 100px;
+      padding: 100px 0 100px;
+    }
+    .launches .section-head { padding: 0 48px; }
+    .launches-carousel-wrap {
+      position: relative;
     }
     .launches-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      display: flex;
+      overflow: hidden;
+      gap: 0;
     }
     .launch-card {
+      flex: 0 0 25%;
       display: block;
       color: var(--black);
+      padding: 0 12px;
+      box-sizing: border-box;
     }
     .launch-card-img {
       aspect-ratio: 3 / 4;
@@ -414,6 +424,11 @@
       transition: opacity 0.3s;
     }
     .launch-link:hover { opacity: 1; }
+    @media (max-width: 768px) {
+      .launches { padding: 80px 0 80px; }
+      .launches .section-head { padding: 0 24px; }
+      .launch-card { flex: 0 0 50%; }
+    }
 
     /* ── PARALLAX GALLERY ────────────────────────────────────────── */
     .pgallery-section {
@@ -471,14 +486,14 @@
     .pgallery-item img {
       display: block;
       width: 100%;
-      height: auto;
+      height: 100%;
+      aspect-ratio: 3/4;
       object-fit: cover;
       border: 1pt solid var(--white);
       transition: transform 0.8s ease;
     }
     .pgallery-item.img-custom img {
       aspect-ratio: 4/5;
-      object-fit: cover;
     }
     .pgallery-item .cover {
       position: absolute;
@@ -650,8 +665,6 @@
 
       .quote-section { padding: 100px 24px; }
 
-      .launches { padding: 80px 24px 80px; }
-      .launches-grid { grid-template-columns: repeat(2, 1fr); }
 
 
       footer { padding: 60px 24px 32px; }
@@ -670,23 +683,6 @@
 
     @media (max-width: 600px) {
       .hero-logo { height: 44px; }
-
-      .launches-grid {
-        grid-template-columns: unset;
-        display: flex;
-        flex-direction: row;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        gap: 16px;
-        padding-bottom: 16px;
-        scrollbar-width: none;
-      }
-      .launches-grid::-webkit-scrollbar { display: none; }
-      .launch-card {
-        flex: 0 0 75vw;
-        scroll-snap-align: start;
-      }
     }
 
     /* ── REDUCED MOTION ──────────────────────────────────────────── */
@@ -1083,31 +1079,50 @@
 
     customElements.define('horizontal-gallery', HorizontalGallery);
 
-    // ── RENDER LAUNCHES ──────────────────────────────────────────────
-    const launchesGrid = document.getElementById('launches-grid');
-    LAUNCHES.forEach(p => {
-      launchesGrid.insertAdjacentHTML('beforeend', `
-        <a href="${p.url}" class="launch-card">
-          <div class="launch-card-img">
-            <img src="${p.image}" alt="${p.name}" loading="lazy">
-          </div>
-          <p class="launch-name">${p.name}</p>
-          <p class="launch-price">${p.price}</p>
-          <span class="launch-link">Ver produto →</span>
-        </a>
-      `);
-    });
+    // ── LAUNCHES CAROUSEL ────────────────────────────────────────────
+    (function() {
+      const grid = document.getElementById('launches-grid');
+      LAUNCHES.forEach(p => {
+        grid.insertAdjacentHTML('beforeend', `
+          <a href="${p.url}" class="launch-card">
+            <div class="launch-card-img">
+              <img src="${p.image}" alt="${p.name}" loading="lazy">
+            </div>
+            <p class="launch-name">${p.name}</p>
+            <p class="launch-price">${p.price}</p>
+            <span class="launch-link">Ver produto →</span>
+          </a>
+        `);
+      });
 
-    // ── LAUNCHES MOBILE CAROUSEL AUTO-SCROLL ─────────────────────────
-    if (window.innerWidth <= 600) {
-      const lg = document.getElementById('launches-grid');
-      let launchIdx = 0;
-      setInterval(() => {
-        launchIdx = (launchIdx + 1) % LAUNCHES.length;
-        const card = lg.children[launchIdx];
-        if (card) lg.scrollTo({ left: card.offsetLeft, behavior: 'smooth' });
-      }, 3000);
-    }
+      const isMobile = () => window.innerWidth <= 768;
+      const visible  = () => isMobile() ? 2 : 4;
+      const total    = LAUNCHES.length;
+      let idx = 0;
+
+      function slide() {
+        const v = visible();
+        const maxIdx = total - v;
+        idx = idx >= maxIdx ? 0 : idx + 1;
+        const pct = (idx / v) * 100;
+        grid.style.transform = `translateX(-${pct}%)`;
+        grid.style.transition = 'transform 0.7s cubic-bezier(0.4,0,0.2,1)';
+      }
+
+      function recalcCards() {
+        const v = visible();
+        Array.from(grid.children).forEach(c => {
+          c.style.flex = `0 0 ${100 / v}%`;
+        });
+        idx = 0;
+        grid.style.transition = 'none';
+        grid.style.transform = 'translateX(0)';
+      }
+
+      recalcCards();
+      window.addEventListener('resize', recalcCards, { passive: true });
+      setInterval(slide, 3000);
+    })();
 
     // ── PARALLAX GALLERY ─────────────────────────────────────────────
     (function() {
