@@ -356,69 +356,6 @@
       line-height: 1.1;
     }
 
-    /* ── LAUNCHES ────────────────────────────────────────────────── */
-    .launches {
-      background: var(--gray-light);
-      padding: 100px 0 100px;
-    }
-    .launches .section-head { padding: 0 48px; }
-    .launches-carousel-wrap {
-      position: relative;
-    }
-    .launches-grid {
-      display: flex;
-      overflow: hidden;
-      gap: 0;
-    }
-    .launch-card {
-      flex: 0 0 25%;
-      display: block;
-      color: var(--black);
-      padding: 0 12px;
-      box-sizing: border-box;
-    }
-    .launch-card-img {
-      aspect-ratio: 3 / 4;
-      overflow: hidden;
-      background: var(--gray-mid);
-      margin-bottom: 16px;
-    }
-    .launch-card-img img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-    .launch-card:hover .launch-card-img img {
-      transform: scale(1.04);
-    }
-    .launch-name {
-      font-family: 'Questrial', sans-serif;
-      font-size: 15px;
-      color: var(--black);
-      margin-bottom: 4px;
-    }
-    .launch-price {
-      font-family: 'Questrial', sans-serif;
-      font-size: 13px;
-      color: var(--gray-dark);
-      margin-bottom: 12px;
-    }
-    .launch-link {
-      font-family: 'Questrial', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--black);
-      opacity: 0.6;
-      transition: opacity 0.3s;
-    }
-    .launch-link:hover { opacity: 1; }
-    @media (max-width: 768px) {
-      .launches { padding: 80px 0 80px; }
-      .launches .section-head { padding: 0 24px; }
-      .launch-card { flex: 0 0 50%; }
-    }
-
     /* ── PARALLAX GALLERY ────────────────────────────────────────── */
     .pgallery-section {
       width: 100%;
@@ -639,7 +576,6 @@
       outline-offset: 2px;
     }
     .bestsellers :focus-visible,
-    .launches :focus-visible,
     .quote-section :focus-visible {
       outline-color: var(--black);
     }
@@ -1183,18 +1119,6 @@
         }
       });
 
-      // Launch cards stagger
-      gsap.from(".launch-card", {
-        opacity: 0,
-        y: 40,
-        stagger: 0.12,
-        duration: 0.8,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".launches-grid",
-          start: "top 85%"
-        }
-      });
 
 
       // Gallery fade-in
