@@ -356,6 +356,70 @@
       line-height: 1.1;
     }
 
+    /* ── VITRINE CAROUSEL ───────────────────────────────────────── */
+    .vitrine {
+      background: var(--gray-light);
+      padding: 100px 0;
+      overflow: hidden;
+    }
+    .vitrine .section-head { padding: 0 48px; margin-bottom: 48px; }
+    .vitrine-track-wrap { overflow: hidden; }
+    .vitrine-track {
+      display: flex;
+      gap: 0;
+      transition: transform 0.8s cubic-bezier(0.4,0,0.2,1);
+    }
+    .vitrine-card {
+      flex: 0 0 25%;
+      padding: 0 12px;
+      box-sizing: border-box;
+      display: block;
+      color: var(--black);
+      text-decoration: none;
+    }
+    .vitrine-card-img {
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      background: var(--gray-mid);
+      margin-bottom: 16px;
+    }
+    .vitrine-card-img img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      padding: 20px;
+      box-sizing: border-box;
+      transition: transform 0.5s ease;
+    }
+    .vitrine-card:hover .vitrine-card-img img { transform: scale(1.05); }
+    .vitrine-card-name {
+      font-family: 'Questrial', sans-serif;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+    .vitrine-card-sub {
+      font-family: 'Questrial', sans-serif;
+      font-size: 11px;
+      color: var(--gray-dark);
+      margin-bottom: 12px;
+    }
+    .vitrine-card-link {
+      font-family: 'Questrial', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--black);
+      border: 1px solid var(--black);
+      padding: 8px 16px;
+      display: inline-block;
+      transition: background 0.3s, color 0.3s;
+    }
+    .vitrine-card-link:hover { background: var(--black); color: var(--white); }
+    @media (max-width: 768px) {
+      .vitrine { padding: 80px 0; }
+      .vitrine .section-head { padding: 0 24px; }
+      .vitrine-card { flex: 0 0 50%; }
+    }
+
     /* ── PARALLAX GALLERY ────────────────────────────────────────── */
     .pgallery-section {
       width: 100%;
@@ -705,7 +769,16 @@
   </section>
 
 
-  <!-- LAUNCHES (removido temporariamente) -->
+  <!-- VITRINE -->
+  <section class="vitrine">
+    <div class="section-head fade-up">
+      <p class="section-label">Coleção Vintage</p>
+      <h2 class="section-title">Descubra mais da coleção vintage</h2>
+    </div>
+    <div class="vitrine-track-wrap">
+      <div class="vitrine-track" id="vitrine-track"></div>
+    </div>
+  </section>
 
   <!-- MOSAIC / HOVER GALLERY -->
   <!-- PARALLAX GALLERY -->
@@ -927,7 +1000,55 @@
       }, 3500);
     });
 
-    // ── RENDER GALLERY ───────────────────────────────────────────────
+    // ── VITRINE CAROUSEL ─────────────────────────────────────────────
+    (function() {
+      const track   = document.getElementById('vitrine-track');
+      const prods   = PRODUCTS_BESTSELLERS;
+      const isMob   = () => window.innerWidth <= 768;
+      const perView = () => isMob() ? 2 : 4;
+
+      // render cards — duplicar para loop contínuo
+      [...prods, ...prods].forEach((p, i) => {
+        track.insertAdjacentHTML('beforeend', `
+          <a href="${p.url}" class="vitrine-card">
+            <div class="vitrine-card-img">
+              <img src="${p.image}" alt="${p.name}" loading="lazy">
+            </div>
+            <p class="vitrine-card-name">${p.name}</p>
+            <p class="vitrine-card-sub">${p.subtitle}</p>
+            <span class="vitrine-card-link">Ver produto</span>
+          </a>
+        `);
+      });
+
+      let idx = 0;
+      const total = prods.length;
+
+      function recalc() {
+        const v = perView();
+        Array.from(track.children).forEach(c => { c.style.flex = `0 0 ${100 / v}%`; });
+      }
+
+      function slide() {
+        idx++;
+        const v   = perView();
+        const pct = (idx / v) * 100;
+        track.style.transition = 'transform 0.8s cubic-bezier(0.4,0,0.2,1)';
+        track.style.transform  = `translateX(-${pct}%)`;
+        if (idx >= total) {
+          setTimeout(() => {
+            track.style.transition = 'none';
+            idx = 0;
+            track.style.transform = 'translateX(0)';
+          }, 850);
+        }
+      }
+
+      recalc();
+      window.addEventListener('resize', () => { recalc(); idx = 0; track.style.transition='none'; track.style.transform='translateX(0)'; }, { passive: true });
+      setInterval(slide, 3200);
+    })();
+
     // ── GALLERY AUTO CAROUSEL ────────────────────────────────────────
     (function() {
       const track  = document.getElementById('gallery-track');
